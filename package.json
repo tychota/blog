@@ -8,6 +8,7 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
+    "bulma": "^0.7.2",
     "gatsby": "^2.0.0",
     "gatsby-source-filesystem": "^2.0.5",
     "gatsby-transformer-remark": "^2.1.8",

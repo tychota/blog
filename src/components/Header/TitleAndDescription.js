@@ -11,10 +11,16 @@ export class TitleAndDescription extends React.Component {
     } = this.props;
 
     return (
-      <div>
-        <h2>{title}</h2>
-        <div>{description}</div>
-      </div>
+      <nav className="level">
+        <div className="container">
+          <p class="level-item has-text-centered">
+            <div>
+              <h2 className="title">{title}</h2>
+              <div className="heading">{description}</div>
+            </div>
+          </p>
+        </div>
+      </nav>
     );
   }
 }
