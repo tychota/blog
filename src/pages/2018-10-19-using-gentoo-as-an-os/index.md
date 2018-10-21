@@ -1,5 +1,5 @@
 ---
-path: "/using gentoo"
+path: "/using-gentoo"
 date: "2018-10-19"
 draft: true
 title: "Using gentoo"
