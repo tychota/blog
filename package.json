@@ -10,9 +10,15 @@
   "dependencies": {
     "bulma": "^0.7.2",
     "gatsby": "^2.0.0",
+    "gatsby-plugin-flow": "^1.0.2",
     "gatsby-source-filesystem": "^2.0.5",
     "gatsby-transformer-remark": "^2.1.8",
     "react": "^16.5.1",
     "react-dom": "^16.5.1"
+  },
+  "devDependencies": {
+    "@gql2ts/language-flow": "^1.9.0",
+    "flow-bin": "^0.83.0",
+    "gql2ts": "^1.10.1"
   }
 }

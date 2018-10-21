@@ -1,0 +1,14 @@
+[ignore]
+<PROJECT_ROOT>/types/.*\.json$
+
+[include]
+<PROJECT_ROOT>/types/gatsby.flow.js
+
+[libs]
+<PROJECT_ROOT>/types/gatsby.flow.js
+
+[lints]
+
+[options]
+
+[strict]
