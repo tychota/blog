@@ -21,9 +21,7 @@ export default class Layout extends React.Component<IProps> {
 
     return (
       <div>
-        <nav className="level">
-          <Header />
-        </nav>
+        <Header />
         <div className="container">
           <PostsList posts={posts} />
         </div>
