@@ -5,10 +5,16 @@ import { TitleAndDescription } from "./TitleAndDescription";
 export default class Header extends React.Component {
   render() {
     return (
-      <StaticQuery
-        query={query}
-        render={data => <TitleAndDescription data={data} />}
-      />
+      <nav className="level">
+        <div className="container">
+          <div className="level-item has-text-centered">
+            <StaticQuery
+              query={query}
+              render={data => <TitleAndDescription data={data} />}
+            />
+          </div>
+        </div>
+      </nav>
     );
   }
 }
