@@ -8,6 +8,7 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.4.1",
     "bulma": "^0.7.2",
     "gatsby": "^2.0.0",
     "gatsby-plugin-flow": "^1.0.2",

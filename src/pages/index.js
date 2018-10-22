@@ -4,6 +4,7 @@ import React from "react";
 import Header from "../components/Header";
 import PostsList from "../components/PostsList";
 import "bulma/css/bulma.css";
+import "@fortawesome/fontawesome-free/css/all.css";
 import { graphql } from "gatsby";
 import type { IMarkdownRemarkConnection } from "../../types/gatsby.flow";
 

@@ -1,12 +1,17 @@
 // @flow
 
 import React from "react";
-import { graphql } from "gatsby";
+import { Link, graphql } from "gatsby";
 import Header from "../components/Header";
+import NeighbourLinks from "../components/NeighbourLinks";
 import type { IMarkdownRemark } from "../../types/gatsby.flow";
 
 type IProps = {
-  data: { markdownRemark: IMarkdownRemark }
+  data: { markdownRemark: IMarkdownRemark },
+  pageContext: {
+    prev: IMarkdownRemark | null,
+    next: IMarkdownRemark | null
+  }
 };
 
 export default class Template extends React.Component<IProps> {
@@ -17,8 +22,10 @@ export default class Template extends React.Component<IProps> {
           frontmatter: { title },
           html
         }
-      }
+      },
+      pageContext: { prev, next }
     } = this.props;
+
     return (
       <div>
         <Header />
@@ -27,6 +34,7 @@ export default class Template extends React.Component<IProps> {
             <h2>{title}</h2>
             <div dangerouslySetInnerHTML={{ __html: html }} />
           </div>
+          <NeighbourLinks prev={prev} next={next} />
         </div>
       </div>
     );
