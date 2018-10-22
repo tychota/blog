@@ -2,7 +2,6 @@
 <PROJECT_ROOT>/types/.*\.json$
 
 [include]
-<PROJECT_ROOT>/types/gatsby.flow.js
 
 [libs]
 <PROJECT_ROOT>/types/gatsby.flow.js
@@ -10,5 +9,8 @@
 [lints]
 
 [options]
+module.name_mapper='^components\(.*\)$' -> '<PROJECT_ROOT>/src/components\1'
+module.name_mapper='^pages\(.*\)$' -> '<PROJECT_ROOT>/src/pages/\1'
+module.name_mapper='^types\(.*\)$' -> '<PROJECT_ROOT>/types/\1'
 
 [strict]

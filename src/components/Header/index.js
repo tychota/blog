@@ -1,8 +1,9 @@
+// @flow
 import React from "react";
 import { StaticQuery, graphql } from "gatsby";
-import { TitleAndDescription } from "./TitleAndDescription";
+import { TitleAndDescription } from "components/Header/TitleAndDescription";
 
-export default class Header extends React.Component {
+export default class Header extends React.Component<{}> {
   render() {
     return (
       <nav

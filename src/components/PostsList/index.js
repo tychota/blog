@@ -1,7 +1,7 @@
 // @flow
 import React from "react";
 import { Link } from "gatsby";
-import type { IMarkdownRemarkEdge } from "../../../types/gatsby.flow";
+import type { IMarkdownRemarkEdge } from "types/gatsby.flow";
 
 type IProps = {
   posts: Array<IMarkdownRemarkEdge | null> | null
