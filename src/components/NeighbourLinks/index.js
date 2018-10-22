@@ -1,7 +1,7 @@
 // @flow
 
 import React from "react";
-import { Link, graphql } from "gatsby";
+import { Link } from "gatsby";
 import type { IMarkdownRemark } from "types/gatsby.flow";
 
 type IProps = {

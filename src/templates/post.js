@@ -1,7 +1,7 @@
 // @flow
 
 import React from "react";
-import { Link, graphql } from "gatsby";
+import { graphql } from "gatsby";
 import Header from "components/Header";
 import NeighbourLinks from "components/NeighbourLinks";
 import type { IMarkdownRemark } from "types/gatsby.flow";
@@ -14,7 +14,7 @@ type IProps = {
   }
 };
 
-export default class Template extends React.Component<IProps> {
+export default class PostTemplate extends React.Component<IProps> {
   render() {
     const {
       data: { markdownRemark },

@@ -1,10 +1,10 @@
 // @flow
 import React from "react";
 import { Link } from "gatsby";
-import type { IMarkdownRemarkEdge } from "types/gatsby.flow";
+import type { IMarkdownRemark } from "types/gatsby.flow";
 
 type IProps = {
-  posts: Array<IMarkdownRemarkEdge | null> | null
+  posts: Array<IMarkdownRemark | null> | null
 };
 
 export default class PostsList extends React.Component<IProps> {
@@ -14,10 +14,9 @@ export default class PostsList extends React.Component<IProps> {
     return (
       <div className="tile is-ancestor is-vertical">
         {posts.map(post => {
-          if (!(post && post.node && post.node.frontmatter)) return null;
-          const { node } = post;
-          if (!node) return null;
-          const { frontmatter } = node;
+          if (!post) return null;
+          const frontmatter = post.frontmatter;
+
           if (!frontmatter) return null;
 
           return (
@@ -25,7 +24,7 @@ export default class PostsList extends React.Component<IProps> {
               key={frontmatter.path}
               className="tile is-primary is-child box"
             >
-              <Link to={frontmatter.path} className="subtitle">
+              <Link to={frontmatter.path} className="subtitle has-text-link">
                 {frontmatter.title}
               </Link>
             </div>

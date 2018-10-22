@@ -7,7 +7,7 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: "DEV-gatsby-plugin-root-import",
+      resolve: "gatsby-plugin-root-import",
       options: {
         types: path.join(__dirname, "types"),
         pages: path.join(__dirname, "src/pages"),
