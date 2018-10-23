@@ -27,7 +27,7 @@ export default class AllTagsIndexTemplate extends React.Component<IProps> {
     return (
       <div>
         <Header />
-        <div className="container">
+        <div className="main container is-fluid">
           <h2 className="subtitle">
             Posts About{" "}
             <span className="has-text-weight-semibold is-capitalized">

@@ -2,6 +2,7 @@
 
 import "bulma/css/bulma.css";
 import "@fortawesome/fontawesome-free/css/all.css";
+import "../style.css";
 
 import React from "react";
 import Header from "components/Header";
@@ -27,7 +28,7 @@ export default class Layout extends React.Component<IProps> {
     return (
       <div>
         <Header />
-        <div className="container">
+        <div className="main container is-fluid">
           <h2 className="subtitle">Recent posts:</h2>
           {posts && (
             <PostsList
