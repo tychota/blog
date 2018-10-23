@@ -3,6 +3,9 @@
 import "bulma/css/bulma.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "../style.css";
+import "prismjs/themes/prism-solarizedlight.css";
+// layouts/index.js
+import "prismjs/plugins/line-numbers/prism-line-numbers.css";
 
 import React from "react";
 import Header from "components/Header";
