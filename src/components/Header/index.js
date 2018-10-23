@@ -7,10 +7,9 @@ export default class Header extends React.Component<{}> {
   render() {
     return (
       <nav
-        className="level has-background-white-ter"
+        className="level hero-head"
         role="navigation"
         aria-label="main navigation"
-        style={{ marginBottom: "50px" }}
       >
         <div className="navbar-brand">
           <div className="navbar-item">

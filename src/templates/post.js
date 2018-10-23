@@ -25,10 +25,19 @@ export default class PostTemplate extends React.Component<IProps> {
 
     return (
       <div>
-        <Header />
+        <section className="hero is-medium is-light is-bold">
+          <Header />
+          <hr className="hr is-marginless" />
+          <section className="section">
+            <div className="hero-body">
+              <div className="container">
+                <h1 className="title">{title}</h1>
+              </div>
+            </div>
+          </section>
+        </section>
         <div className="main container is-fluid">
           <div className="content">
-            {title && <h2>{title}</h2>}
             <div dangerouslySetInnerHTML={{ __html: html }} />
           </div>
           <NeighbourLinks prev={prev} next={next} />

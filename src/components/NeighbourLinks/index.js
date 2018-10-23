@@ -16,8 +16,8 @@ export default class NeighbourLinks extends React.Component<IProps> {
       <div className="level">
         <div className="level-item has-text-centered">
           {prev && prev.frontmatter ? (
-            <Link to={prev.frontmatter.path} className="button is-small">
-              <span className="icon is-small">
+            <Link to={prev.frontmatter.path} className="button is-light">
+              <span className="icon">
                 <i className="fas fa-arrow-left" />
               </span>
               <span>{prev.frontmatter.title}</span>
@@ -26,9 +26,9 @@ export default class NeighbourLinks extends React.Component<IProps> {
         </div>
         <div className="level-item has-text-centered">
           {next && next.frontmatter ? (
-            <Link to={next.frontmatter.path} className="button is-small">
+            <Link to={next.frontmatter.path} className="button is-light">
               <span>{next.frontmatter.title}</span>
-              <span className="icon is-small">
+              <span className="icon">
                 <i className="fas fa-arrow-right" />
               </span>
             </Link>
