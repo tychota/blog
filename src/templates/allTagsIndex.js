@@ -21,9 +21,23 @@ export default class AllTagsIndexTemplate extends React.Component<IProps> {
 
     return (
       <div>
-        <Header />
+        <section className="hero is-light is-bold">
+          <Header />
+          <hr className="hr is-marginless" />
+          <section className="section">
+            <div className="hero-body">
+              <div className="container">
+                <h1 className="subtitle is-2">
+                  Here are all the{" "}
+                  <span className="has-text-weight-semibold is-capitalized">
+                    Tags.
+                  </span>
+                </h1>
+              </div>
+            </div>
+          </section>
+        </section>
         <div className="main container is-fluid">
-          <h2 className="subtitle">Tags</h2>
           <TagsList tags={tags} />
         </div>
       </div>

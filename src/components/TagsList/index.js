@@ -16,7 +16,10 @@ export default class TagsList extends React.Component<IProps> {
           tags.map(tagName => {
             if (!tagName) return null;
             return (
-              <div key={tagName} className="tile is-primary is-child box">
+              <div
+                key={tagName}
+                className="tile notification is-light  is-child box"
+              >
                 <Link
                   to={`/tags/${tagName}`}
                   className="subtitle has-text-link"

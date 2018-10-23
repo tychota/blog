@@ -22,8 +22,8 @@ export class TitleAndDescription extends React.Component<IProps> {
 
     return (
       <div>
-        <h2 className="title">{title}</h2>
-        <div className="subtitle heading has-text-link">{description}</div>
+        <div className="title is-1">{title}</div>
+        <div className="subtitle heading has-text-link is-6">{description}</div>
       </div>
     );
   }

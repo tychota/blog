@@ -22,7 +22,7 @@ export default class PostsList extends React.Component<IProps> {
           return (
             <div
               key={frontmatter.path}
-              className="tile is-primary is-child box"
+              className="tile notification is-light is-child box"
             >
               <Link to={frontmatter.path} className="subtitle has-text-link">
                 {frontmatter.title}

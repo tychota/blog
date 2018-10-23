@@ -7,7 +7,7 @@ export default class Header extends React.Component<{}> {
   render() {
     return (
       <nav
-        className="level hero-head"
+        className="navbar hero-head"
         role="navigation"
         aria-label="main navigation"
       >
@@ -21,9 +21,9 @@ export default class Header extends React.Component<{}> {
             </Link>
           </div>
         </div>
-        <div className="navbar-menu">
+        <div class="navbar-end">
           <Link to="/tags" className="navbar-item has-text-link">
-            Tags
+            Post by Tags
           </Link>
         </div>
       </nav>

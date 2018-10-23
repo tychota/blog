@@ -25,13 +25,15 @@ export default class PostTemplate extends React.Component<IProps> {
 
     return (
       <div>
-        <section className="hero is-medium is-light is-bold">
+        <section className="hero is-light is-bold">
           <Header />
           <hr className="hr is-marginless" />
           <section className="section">
             <div className="hero-body">
               <div className="container">
-                <h1 className="title">{title}</h1>
+                <div className="title has-text-weight-semibold is-1">
+                  {title}
+                </div>
               </div>
             </div>
           </section>

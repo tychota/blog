@@ -27,9 +27,23 @@ export default class Layout extends React.Component<IProps> {
 
     return (
       <div>
-        <Header />
+        <navbar className="hero is-light is-bold navbar">
+          <Header />
+          <hr className="hr is-marginless" />
+          <section className="section">
+            <div className="hero-body">
+              <div className="container">
+                <h1 className="subtitle is-2">
+                  Here are all the{" "}
+                  <span className="has-text-weight-semibold is-capitalized">
+                    Recent Posts
+                  </span>
+                </h1>
+              </div>
+            </div>
+          </section>
+        </navbar>
         <div className="main container is-fluid">
-          <h2 className="subtitle">Recent posts:</h2>
           {posts && (
             <PostsList
               posts={posts
