@@ -8,16 +8,68 @@ excerpt: "The client noticed a wrong behaviour. The material input we were using
 his color on error ... except for the secureText used for the password. The bug was not happening on android."
 ---
 
-> History of a bug: from the bug detection to the fix (that may lead to a React Native PR).
+> **History of a bug**: from the bug detection to the fix (that may lead to a React Native PR).
 
 # Prehistory
 
 All started when our PO notifieed a weird glitch.
 
+![weird glitch](./glitch.png)
+
 # Problem solving
 
-```js
-test;
+```js{1,4-10}
+// @flow
+
+// #region global import
+import React from "react";
+// #endregion global import
+
+// #region components
+import Header from "components/Header";
+import PostsList from "components/PostsList";
+// #endregion components
+
+// #region types
+import type { IMarkdownRemark } from "types/gatsby.flow";
+// #endregion types
+
+type IProps = {
+  pageContext: {
+    tagName: string,
+    posts: Array<IMarkdownRemark | null> | null
+  }
+};
+
+export default class AllTagsIndexTemplate extends React.Component<IProps> {
+  render() {
+    const { posts, tagName } = this.props.pageContext;
+
+    return (
+      <div>
+        <section className="hero is-light is-bold">
+          <Header />
+          <hr className="hr is-marginless" />
+          <section className="section">
+            <div className="hero-body">
+              <div className="container">
+                <h1 className="subtitle is-2">
+                  Posts About{" "}
+                  <span className="has-text-weight-semibold is-capitalized">
+                    {tagName}
+                  </span>
+                </h1>
+              </div>
+            </div>
+          </section>
+        </section>
+        <div className="main container is-fluid">
+          <PostsList posts={posts} />
+        </div>
+      </div>
+    );
+  }
+}
 ```
 
 Lorem ipsum dolor amet yOLO actually jean shorts man bun. Freegan trust fund blue bottle, taiyaki chillwave meh marfa humblebrag godard umami small batch. Small batch wayfarers irony XOXO shoreditch occupy. Gochujang freegan chambray meh, swag fam af DIY roof party etsy lo-fi subway tile mlkshk.
