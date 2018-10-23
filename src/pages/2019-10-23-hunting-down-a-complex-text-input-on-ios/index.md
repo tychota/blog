@@ -18,7 +18,7 @@ All started when our PO notifieed a weird glitch.
 
 # Problem solving
 
-```js{1,4-10}
+```jsx{1,4-10}{numberLines: true}
 // @flow
 
 // #region global import
