@@ -2,6 +2,7 @@
   padding: 2rem;
 }
 
+/* Custom property for bulma */
 .hero-head.is-light.is-bold {
   background-image: linear-gradient(
     141deg,
@@ -9,6 +10,36 @@
     whitesmoke 71%,
     white 100%
   );
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns:
+    [xl-start] 2fr 1.5rem [l-start] 1fr [md-start] minmax(0, 720px)
+    [md-end] 1fr [l-end] 1.5rem 2fr [xl-end];
+}
+
+.grid * {
+  grid-column: md;
+}
+
+.grid-l {
+  grid-column: l;
+}
+
+.grid-xl {
+  grid-column: xl;
+}
+
+/* Highlighting colors */
+.gatsby-highlight {
+  grid-column: l;
+  background-color: whitesmoke;
+  border-radius: 0.3em;
+  margin: 0.5em 0;
+  padding: 1em;
+  overflow: auto;
 }
 
 .gatsby-highlight-code-line {
@@ -19,14 +50,6 @@
   padding-right: 1em;
   padding-left: 0.75em;
   border-left: 0.25em solid rgb(255, 176, 176);
-}
-
-.gatsby-highlight {
-  background-color: whitesmoke;
-  border-radius: 0.3em;
-  margin: 0.5em 0;
-  padding: 1em;
-  overflow: auto;
 }
 
 .gatsby-highlight pre[class*="language-"] {

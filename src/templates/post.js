@@ -31,7 +31,7 @@ export default class PostTemplate extends React.Component<IProps> {
           <section className="section">
             <div className="hero-body">
               <div className="container">
-                <div className="title has-text-weight-semibold is-1">
+                <div className="title has-text-weight-semibold is-1 has-text-centered">
                   {title}
                 </div>
               </div>
@@ -40,7 +40,7 @@ export default class PostTemplate extends React.Component<IProps> {
         </section>
         <div className="main container is-fluid">
           <div className="content">
-            <div dangerouslySetInnerHTML={{ __html: html }} />
+            <div dangerouslySetInnerHTML={{ __html: html }} className="grid" />
           </div>
           <NeighbourLinks prev={prev} next={next} />
         </div>
