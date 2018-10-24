@@ -3,7 +3,8 @@ const path = require("path");
 module.exports = {
   siteMetadata: {
     title: "One percent",
-    description: "Be one percent better everyday."
+    description: "This is how I try to be one perceent better everyday.",
+    siteUrl: "https://blog.tycoach.me"
   },
   plugins: [
     {
@@ -35,6 +36,7 @@ module.exports = {
         ]
       }
     },
+    "gatsby-plugin-catch-links",
     "gatsby-transformer-sharp",
     "gatsby-plugin-sharp",
     {
@@ -43,6 +45,25 @@ module.exports = {
         name: "pages",
         path: `${__dirname}/src/pages`
       }
-    }
+    },
+    "gatsby-plugin-feed",
+    "gatsby-plugin-sitemap",
+    "gatsby-plugin-robots-txt",
+    {
+      resolve: "gatsby-plugin-manifest",
+      options: {
+        name: "One Percent Better",
+        short_name: "1%",
+        description: "This is how I try to be one perceent better everyday.",
+        theme_color: "#df0931",
+        background_color: "#f5f5f5",
+        display: "minimal-ui",
+        orientation: "portrait",
+        scope: "/",
+        start_url: "/",
+        icon: "src/images/logo/one-percent-512.png"
+      }
+    },
+    "gatsby-plugin-offline"
   ]
 };
