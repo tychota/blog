@@ -21,13 +21,32 @@ a.has-text-link:hover {
   color: #bf082a !important;
   background-color: #ee7d924d;
 }
+.content *::selection {
+  background: #ee7d924d; /* WebKit/Blink Browsers */
+}
+.content *::-moz-selection {
+  background: #ee7d924d; /* Gecko Browsers */
+}
+code[class*="language-"]::selection,
+code[class*="language-"] span::selection {
+  background: #ee7d924d !important;
+}
+.content a {
+  color: #e32549 !important;
+}
+.content a:hover {
+  color: #bf082a !important;
+}
 .title:not(.is-spaced) + .subtitle {
   margin-top: -1.5rem;
 }
-.content * {
+.content p {
   line-height: 1.7;
 }
-.content p:not(:last-child),
+.content p:not(:last-child) {
+  margin-bottom: 0em;
+}
+.content p:not(:last-child) + *:not(ul),
 .content dl:not(:last-child),
 .content ol:not(:last-child),
 .content ul:not(:last-child),
@@ -42,7 +61,7 @@ a.has-text-link:hover {
   padding-top: 2rem;
   display: grid;
   grid-template-columns:
-    [xl-start] 2fr 1.2rem [l-start] 1fr [md-start] minmax(0, 720px)
+    [xl-start] 2fr 1.2rem [l-start] 1fr [md-start] minmax(0, 769px)
     [md-end] 1fr [l-end] 1.2rem 2fr [xl-end];
 }
 
@@ -58,7 +77,10 @@ a.has-text-link:hover {
   grid-column: xl;
 }
 
-.gatsby-highlight {
+.grid .gatsby-highlight {
+  grid-column: l;
+}
+.grid img {
   grid-column: l;
 }
 
@@ -105,4 +127,19 @@ code .tag:not(body) {
   padding-left: unset;
   padding-right: unset;
   white-space: unset;
+}
+
+code .number {
+  align-items: unset;
+  background-color: unset;
+  border-radius: unset;
+  display: unset;
+  font-size: unset;
+  height: unset;
+  justify-content: unset;
+  margin-right: unset;
+  min-width: unset;
+  padding: unset;
+  text-align: unset;
+  vertical-align: unset;
 }

@@ -1,10 +1,10 @@
 ---
 path: "/hunting-down-a-complex-text-input-on-ios"
 date: "2018-10-23"
-draft: true
-title: "Hunting down a complexe react native bug in iOS"
-tags: ["Objectif C", "react-native", "ios"]
-excerpt: "The client noticed a wrong behaviour. The material input we were using on the project was changing
+draft: false
+title: "Hunting down a complex react native bug in iOS"
+tags: ["Objective C", "react-native", "ios"]
+excerpt: "The client noticed a wrong behavior. The material input we were using on the project was changing
 his color on error ... except for the secureText used for the password. The bug was not happening on android."
 ---
 
@@ -12,76 +12,364 @@ his color on error ... except for the secureText used for the password. The bug 
 
 # Prehistory
 
-All started when our PO notifieed a weird glitch.
+All started when our PO notified a weird glitch in our client React Native app
 
 ![weird glitch](./glitch.png)
 
+For some reason, the _password input was staying white_ when the form was in error.
+The other input were correctly switching label, content and input underline to black when the form failed.
+
+_And that was only happening in iOS_. 😱
+
+---
+
+I _did let the problem pass_, as there was more important problems.
+
+Later in the week, I see the PR _"fixing"_ this. The PR was more _"hacking around"_ the problem, was changing the style of the input so the problem did not appear.
+
+The PR was also medium sized (`+52 -46`), affecting other inputs and in my opinion also a regression UX wise. So I was scared to merge it considering it was risking to break other part of the app. Moreover, I had the strong feeling a less "hacky" solution was possible, provided that I manage to understand what was exactly happening.
+
+I ask for an appeal. 30 min were granted to me to investigate the bug. Pff 🤠.
+
 # Problem solving
 
-```jsx{1,4-10}{numberLines: true}
-// @flow
+**How to investigate fast enough so I stay in the deadline?**
 
-// #region global import
-import React from "react";
-// #endregion global import
+Let's try to narrow the problem by eliminating some root causes hypothesis. An image is worth hundreds words.
 
-// #region components
-import Header from "components/Header";
-import PostsList from "components/PostsList";
-// #endregion components
+![debugging flow](./flow-debug.png)
 
-// #region types
-import type { IMarkdownRemark } from "types/gatsby.flow";
-// #endregion types
+I had the strong intuition that the problem has to be in native side (since Android was working fine).
 
-type IProps = {
-  pageContext: {
-    tagName: string,
-    posts: Array<IMarkdownRemark | null> | null
+_But it is still worth verifying this by doing some go and see_ in the code base using the debugger: indeed, that even a problem that is platform specific can have many root cause. **Until knowing what I'm looking for, it would be a waste to open the native IDE and look and the code randomly.** 🤡
+
+Lets take closer look of our code ! Our component looks like this (simplified/redacted):
+
+```jsx{19,27,36-44}{numberLines: true}
+import { TextInput } from "react-native";
+import {
+  makeReactNativeField,
+  withError,
+  withInputTypeProps,
+  withNextInputAutoFocusInput
+} from "react-native-formik";
+import { TextField } from "react-native-material-textfield";
+
+class InputWithFocus extends Component {
+  private root = React.createRef();
+
+  public focus() {
+    if (this.root.current) this.root.current.input.focus();
   }
-};
 
-export default class AllTagsIndexTemplate extends React.Component<IProps> {
-  render() {
-    const { posts, tagName } = this.props.pageContext;
+  public render() {
+    const {
+      error,
+      touched,
+      label,
+      theme,
+      containerStyle,
+      ...props
+    } = this.props;
+
+    const displayError = !!error && touched;
+    const errorColor = theme.colors.error;
+
+    const baseColor = theme.colors.light_translucent;
+    const tintColor = theme.colors.white;
+    const textColor = theme.colors.white;
 
     return (
-      <div>
-        <section className="hero is-light is-bold">
-          <Header />
-          <hr className="hr is-marginless" />
-          <section className="section">
-            <div className="hero-body">
-              <div className="container">
-                <h1 className="subtitle is-2">
-                  Posts About{" "}
-                  <span className="has-text-weight-semibold is-capitalized">
-                    {tagName}
-                  </span>
-                </h1>
-              </div>
-            </div>
-          </section>
-        </section>
-        <div className="main container is-fluid">
-          <PostsList posts={posts} />
-        </div>
-      </div>
+      <TextField
+        ref={this.root}
+        baseColor={displayError ? errorColor : baseColor}
+        tintColor={displayError ? errorColor : tintColor}
+        textColor={displayError ? errorColor : textColor}
+        label={label}
+        error={error}
+        errorColor={errorColor}
+        containerStyle={containerStyle}
+        {...props}
+      />
     );
+  }
+}
+
+export const FormInput = withTheme(
+  withInputTypeProps(
+    makeReactNativeField(withError(withNextInputAutoFocusInput(InputWithFocus)))
+  )
+);
+FormInput.displayName = "FormInput";
+```
+
+Either:
+
+- the `error` props is wrong, so the color is not set
+- the `touched` props is wrong, then the error is not displayed
+- the actual material input is broken
+- RN has a bug
+
+By putting a breakpoint in React Native debugger in the implementation of `react-native-text-field` [here](https://github.com/n4kz/react-native-material-textfield/blob/master/src/components/field/index.js#L509), I did invalidate the first three hypothesis.
+
+It is confirmed, it is a bug in RN 😰 And I have only 20 min left 😱.
+
+# Debugging RN, native side
+
+**Before starting the section I have to insist on one point: never use anything else that the native IDE to debug native side! On iOS use XCode, on android, Android Studio. Point.**
+
+So lets open XCode and press `Command` + `O` to quick open.
+
+![XCode](./xcode-1.png)
+
+React Native has a concept of View Manager. As far as I understand, it is a singleton responsible to call the underlying view (for render) and the underlying shadow view (for layout) and update the native properties.
+
+Not that on RN iOS there is a strong heritage hierarchy for text input view manager.
+
+![RCTSingleLineTextInputViewManager](./hierarchy.png)
+
+That does not change how the view manager is working, but just makes harder to see what is called and how.
+
+A view manager looks like this
+
+```objectivec{29}{numberLines: true}
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+#import "RCTBaseTextViewManager.h"
+
+@implementation RCTBaseTextViewManager
+
+RCT_EXPORT_MODULE(RCTBaseText)
+
+- (UIView *)view
+{
+  RCTAssert(NO, @"The `-[RCTBaseTextViewManager view]` property must be overridden in subclass.");
+  return nil;
+}
+
+- (RCTShadowView *)shadowView
+{
+  RCTAssert(NO, @"The `-[RCTBaseTextViewManager shadowView]` property must be overridden in subclass.");
+  return nil;
+}
+
+#pragma mark - Text Attributes
+
+// Color
+RCT_REMAP_SHADOW_PROPERTY(color, textAttributes.foregroundColor, UIColor)
+RCT_REMAP_SHADOW_PROPERTY(backgroundColor, textAttributes.backgroundColor, UIColor)
+RCT_REMAP_SHADOW_PROPERTY(opacity, textAttributes.opacity, CGFloat)
+// Font
+RCT_REMAP_SHADOW_PROPERTY(fontFamily, textAttributes.fontFamily, NSString)
+RCT_REMAP_SHADOW_PROPERTY(fontSize, textAttributes.fontSize, CGFloat)
+RCT_REMAP_SHADOW_PROPERTY(fontWeight, textAttributes.fontWeight, NSString)
+RCT_REMAP_SHADOW_PROPERTY(fontStyle, textAttributes.fontStyle, NSString)
+RCT_REMAP_SHADOW_PROPERTY(fontVariant, textAttributes.fontVariant, NSArray)
+RCT_REMAP_SHADOW_PROPERTY(allowFontScaling, textAttributes.allowFontScaling, BOOL)
+RCT_REMAP_SHADOW_PROPERTY(letterSpacing, textAttributes.letterSpacing, CGFloat)
+// Paragraph Styles
+RCT_REMAP_SHADOW_PROPERTY(lineHeight, textAttributes.lineHeight, CGFloat)
+RCT_REMAP_SHADOW_PROPERTY(textAlign, textAttributes.alignment, NSTextAlignment)
+RCT_REMAP_SHADOW_PROPERTY(writingDirection, textAttributes.baseWritingDirection, NSWritingDirection)
+// Decoration
+RCT_REMAP_SHADOW_PROPERTY(textDecorationColor, textAttributes.textDecorationColor, UIColor)
+RCT_REMAP_SHADOW_PROPERTY(textDecorationStyle, textAttributes.textDecorationStyle, NSUnderlineStyle)
+RCT_REMAP_SHADOW_PROPERTY(textDecorationLine, textAttributes.textDecorationLine, RCTTextDecorationLineType)
+// Shadow
+RCT_REMAP_SHADOW_PROPERTY(textShadowOffset, textAttributes.textShadowOffset, CGSize)
+RCT_REMAP_SHADOW_PROPERTY(textShadowRadius, textAttributes.textShadowRadius, CGFloat)
+RCT_REMAP_SHADOW_PROPERTY(textShadowColor, textAttributes.textShadowColor, UIColor)
+// Special
+RCT_REMAP_SHADOW_PROPERTY(isHighlighted, textAttributes.isHighlighted, BOOL)
+RCT_REMAP_SHADOW_PROPERTY(textTransform, textAttributes.textTransform, RCTTextTransform)
+
+@end
+```
+
+When you set the `color` props in react, the bridge calls indirectly the `prop_color` function of the view manager that is generated by the macro `RCT_REMAP_SHADOW_PROPERTY`
+
+```objectivec{29}{numberLines: true}
+/**
+ * This handles the simple case, where JS and native property names match.
+ */
+#define RCT_EXPORT_VIEW_PROPERTY(name, type) \
++ (NSArray<NSString *> *)propConfig_##name RCT_DYNAMIC { return @[@#type]; }
+
+/**
+ * This macro maps a named property to an arbitrary key path in the view.
+ */
+#define RCT_REMAP_VIEW_PROPERTY(name, keyPath, type) \
++ (NSArray<NSString *> *)propConfig_##name RCT_DYNAMIC { return @[@#type, @#keyPath]; }
+
+/**
+ * This macro can be used when you need to provide custom logic for setting
+ * view properties. The macro should be followed by a method body, which can
+ * refer to "json", "view" and "defaultView" to implement the required logic.
+ */
+#define RCT_CUSTOM_VIEW_PROPERTY(name, type, viewClass) \
+RCT_REMAP_VIEW_PROPERTY(name, __custom__, type)         \
+- (void)set_##name:(id)json forView:(viewClass *)view withDefaultView:(viewClass *)defaultView RCT_DYNAMIC
+
+/**
+ * This macro is used to map properties to the shadow view, instead of the view.
+ */
+#define RCT_EXPORT_SHADOW_PROPERTY(name, type) \
++ (NSArray<NSString *> *)propConfigShadow_##name RCT_DYNAMIC { return @[@#type]; }
+
+/**
+ * This macro maps a named property to an arbitrary key path in the shadow view.
+ */
+#define RCT_REMAP_SHADOW_PROPERTY(name, keyPath, type) \
++ (NSArray<NSString *> *)propConfigShadow_##name RCT_DYNAMIC { return @[@#type, @#keyPath]; }
+
+/**
+ * This macro can be used when you need to provide custom logic for setting
+ * shadow view properties. The macro should be followed by a method body, which can
+ * refer to "json" and "view".
+ */
+#define RCT_CUSTOM_SHADOW_PROPERTY(name, type, viewClass) \
+RCT_REMAP_SHADOW_PROPERTY(name, __custom__, type)         \
+- (void)set_##name:(id)json forShadowView:(viewClass *)view RCT_DYNAMIC
+```
+
+The view manager then call the view to upgrade the native properties. Done.
+
+**Well but why then the TextInput does not update ?**
+
+![Why ?????](https://media.giphy.com/media/EdW1pjRlyMTCM/giphy.gif)
+
+Head over `RCTBaseTextInputView.m` (that is the last big paste of RN code ^^):
+
+When the color is changed, the `setAttributedText` is somehow called.
+
+```objectivec{15}{numberLines: true}
+- (void)setAttributedText:(NSAttributedString *)attributedText
+{
+  NSInteger eventLag = _nativeEventCount - _mostRecentEventCount;
+  BOOL textNeedsUpdate = NO;
+  // Remove tag attribute to ensure correct attributed string comparison.
+  NSMutableAttributedString *const backedTextInputViewTextCopy = [self.backedTextInputView.attributedText mutableCopy];
+  NSMutableAttributedString *const attributedTextCopy = [attributedText mutableCopy];
+
+  [backedTextInputViewTextCopy removeAttribute:RCTTextAttributesTagAttributeName
+                                         range:NSMakeRange(0, backedTextInputViewTextCopy.length)];
+
+  [attributedTextCopy removeAttribute:RCTTextAttributesTagAttributeName
+                                range:NSMakeRange(0, attributedTextCopy.length)];
+
+  textNeedsUpdate = ([self textOf:attributedTextCopy equals:backedTextInputViewTextCopy] == NO);
+
+  if (eventLag == 0 && textNeedsUpdate) {
+    UITextRange *selection = self.backedTextInputView.selectedTextRange;
+    NSInteger oldTextLength = self.backedTextInputView.attributedText.string.length;
+
+    self.backedTextInputView.attributedText = attributedText;
+
+    if (selection.empty) {
+      // Maintaining a cursor position relative to the end of the old text.
+      NSInteger offsetStart =
+      [self.backedTextInputView offsetFromPosition:self.backedTextInputView.beginningOfDocument
+                                        toPosition:selection.start];
+      NSInteger offsetFromEnd = oldTextLength - offsetStart;
+      NSInteger newOffset = attributedText.string.length - offsetFromEnd;
+      UITextPosition *position =
+      [self.backedTextInputView positionFromPosition:self.backedTextInputView.beginningOfDocument
+                                              offset:newOffset];
+      [self.backedTextInputView setSelectedTextRange:[self.backedTextInputView textRangeFromPosition:position toPosition:position]
+                                      notifyDelegate:YES];
+    }
+
+    [self updateLocalData];
+  } else if (eventLag > RCTTextUpdateLagWarningThreshold) {
+    RCTLogWarn(@"Native TextInput(%@) is %lld events ahead of JS - try to make your JS faster.", self.backedTextInputView.attributedText.string, (long long)eventLag);
   }
 }
 ```
 
-Lorem ipsum dolor amet yOLO actually jean shorts man bun. Freegan trust fund blue bottle, taiyaki chillwave meh marfa humblebrag godard umami small batch. Small batch wayfarers irony XOXO shoreditch occupy. Gochujang freegan chambray meh, swag fam af DIY roof party etsy lo-fi subway tile mlkshk.
+This function check if the new text equal the old text at line 15, calling:
 
-Cold-pressed fashion axe leggings franzen bicycle rights aesthetic. Vice etsy lyft blog, meh next level iceland tacos. Shaman aesthetic jean shorts lomo organic, vinyl photo booth shoreditch edison bulb. Scenester kogi activated charcoal, jean shorts food truck air plant forage literally.
+```objectivec{13}{numberLines: true}
+- (BOOL)textOf:(NSAttributedString*)newText equals:(NSAttributedString*)oldText{
+  // When the dictation is running we can't update the attributed text on the backed up text view
+  // because setting the attributed string will kill the dictation. This means that we can't impose
+  // the settings on a dictation.
+  // Similarly, when the user is in the middle of inputting some text in Japanese/Chinese, there will be styling on the
+  // text that we should disregard. See https://developer.apple.com/documentation/uikit/uitextinput/1614489-markedtextrange?language=objc
+  // for more info.
+  // Lastly, when entering a password, etc., there will be additional styling on the field as the native text view
+  // handles showing the last character for a split second.
+  BOOL shouldFallbackToBareTextComparison =
+    [self.backedTextInputView.textInputMode.primaryLanguage isEqualToString:@"dictation"] ||
+    self.backedTextInputView.markedTextRange ||
+    self.backedTextInputView.isSecureTextEntry;
+  if (shouldFallbackToBareTextComparison) {
+    return ([newText.string isEqualToString:oldText.string]);
+  } else {
+    return ([newText isEqualToAttributedString:oldText]);
+  }
+}
+```
 
-Coloring book tbh bitters street art pour-over yr readymade iceland palo santo. Normcore umami cray, intelligentsia migas truffaut tacos. Meh food truck intelligentsia green juice brooklyn health goth 3 wolf moon tofu coloring book umami ethical. Enamel pin man braid meggings food truck, migas artisan edison bulb. La croix XOXO fixie vaporware poke fanny pack typewriter chia.
+But this check does a special job for `secureText` (at line 13) aka password field. When the text does not change, but only the color, the secure text equal the old one (which is not the case of normal field).
+The custom check is documented but I don't think the impact is the intended one.
 
-Selvage pickled activated charcoal, viral lumbersexual narwhal drinking vinegar YOLO truffaut blue bottle. Chicharrones celiac prism vice, waistcoat shabby chic kickstarter YOLO franzen polaroid selvage. Heirloom affogato tbh tote bag church-key selfies, austin PBR&B prism williamsburg chillwave post-ironic chicharrones. Mlkshk offal cray wolf, synth forage ennui hashtag celiac.
+In deed: that prevents the `updateLocalData` to be called that prevents the `enforceTextAttributesIfNeeded` to be called.
 
-Cardigan cornhole succulents thundercats lumbersexual bitters roof party pork belly kogi knausgaard messenger bag skateboard tumeric. Mustache squid pork belly pickled. Church-key squid thundercats, marfa intelligentsia ethical la croix chartreuse. Four dollar toast butcher trust fund master cleanse sartorial 8-bit mixtape franzen listicle paleo austin. Kombucha ramps everyday carry portland. Squid kickstarter poutine raw denim, bespoke hoodie artisan migas man bun ennui leggings tumblr. Four loko disrupt freegan, coloring book slow-carb poke PBR&B master cleanse tumblr ugh af.
+```objectivec{3,17}{numberLines: true}
+- (void)updateLocalData
+{
+  [self enforceTextAttributesIfNeeded];
 
-Oh. You need a little dummy text for your mockup? How quaint.
+  [_bridge.uiManager setLocalData:[self.backedTextInputView.attributedText copy]
+                          forView:self];
+}
 
-I bet you’re still using Bootstrap too…
+- (void)enforceTextAttributesIfNeeded
+{
+  id<RCTBackedTextInputViewProtocol> backedTextInputView = self.backedTextInputView;
+  if (backedTextInputView.attributedText.string.length != 0) {
+    return;
+  }
+
+  backedTextInputView.font = _textAttributes.effectiveFont;
+  backedTextInputView.textColor = _textAttributes.effectiveForegroundColor;
+  backedTextInputView.textAlignment = _textAttributes.alignment;
+}
+```
+
+At line 17, in `enforceTextAttributesIfNeeded`, the text color is set: `backedTextInputView.textColor = _textAttributes.effectiveForegroundColor;`
+
+That is way clearer now.
+
+# The fix
+
+Only 3 min left 🤯. That sad, no time for a good fix, no time for a PR to React Native yet.
+
+How to fix it quick ? Let's use `patch-package` (a npm tools that help a lot) and remove the secure condition.
+
+```patch
+patch-package
+--- a/node_modules/react-native/Libraries/Text/TextInput/RCTBaseTextInputView.m
++++ b/node_modules/react-native/Libraries/Text/TextInput/RCTBaseTextInputView.m
+@@ -109,8 +109,7 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithFrame:(CGRect)frame)
+   // handles showing the last character for a split second.
+   BOOL shouldFallbackToBareTextComparison =
+     [self.backedTextInputView.textInputMode.primaryLanguage isEqualToString:@"dictation"] ||
+-    self.backedTextInputView.markedTextRange ||
+-    self.backedTextInputView.isSecureTextEntry;
++    self.backedTextInputView.markedTextRange;
+   if (shouldFallbackToBareTextComparison) {
+     return ([newText.string isEqualToString:oldText.string]);
+   } else {
+```
+
+Is it a good fix ? Probably not !
+
+Does it work on my project ? Yes, I tested some edge case and apparently removing it break nothing. Apparently ...
+
+My next steps are to contact RN members and try to know more ! **But that is for another time.**
