@@ -4,10 +4,8 @@
 // and https://github.com/gatsbyjs/gatsby/blob/master/www/src/components/layout.js
 // both under MIT
 
-import path from "path";
 import React from "react";
 import Helmet from "react-helmet";
-import PropTypes from "prop-types";
 import type { IFrontmatter2 } from "types/gatsby.flow";
 import MyImg from "../../images/me/tycho.jpg";
 

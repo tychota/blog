@@ -12,6 +12,11 @@ export default class Header extends React.Component<{}> {
         aria-label="main navigation"
       >
         <div className="navbar-brand">
+          <div className="navbar-item is-hidden-mobile">
+            <Link to="/">
+              <img src={require("images/logo/one-percent-512.png")} alt="" />
+            </Link>
+          </div>
           <div className="navbar-item">
             <Link to="/">
               <StaticQuery

@@ -11,6 +11,7 @@ module.exports = {
       resolve: "gatsby-plugin-root-import",
       options: {
         types: path.join(__dirname, "types"),
+        images: path.join(__dirname, "src/images"),
         pages: path.join(__dirname, "src/pages"),
         components: path.join(__dirname, "src/components")
       }
@@ -55,7 +56,7 @@ module.exports = {
         name: "One Percent Better",
         short_name: "1%",
         description: "This is how I try to be one perceent better everyday.",
-        theme_color: "#df0931",
+        theme_color: "#B6001F",
         background_color: "#f5f5f5",
         display: "minimal-ui",
         orientation: "portrait",

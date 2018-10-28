@@ -41,7 +41,7 @@ export default class PostTemplate extends React.Component<IProps> {
               </div>
             </section>
           </section>
-          <div className="main container is-fluid">
+          <div className="container is-fluid">
             <div className="content">
               <div
                 dangerouslySetInnerHTML={{ __html: html }}
