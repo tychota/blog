@@ -21,6 +21,9 @@ a.has-text-link:hover {
   color: #bf082a !important;
   background-color: #ee7d924d;
 }
+.content p > a {
+  background-color: #ee7d924d;
+}
 .content *::selection {
   background: #ee7d924d; /* WebKit/Blink Browsers */
 }
@@ -46,7 +49,7 @@ code[class*="language-"] span::selection {
 .content p:not(:last-child) {
   margin-bottom: 0em;
 }
-.content p:not(:last-child) + *:not(ul),
+.content p:not(:last-child),
 .content dl:not(:last-child),
 .content ol:not(:last-child),
 .content ul:not(:last-child),
@@ -54,6 +57,11 @@ code[class*="language-"] span::selection {
 .content pre:not(:last-child),
 .content table:not(:last-child) {
   margin-bottom: 1.5em;
+}
+
+.content p + ul,
+.content p + ol {
+  margin-top: -1.5em;
 }
 
 /* Grid */
@@ -91,6 +99,7 @@ code[class*="language-"] span::selection {
   margin: 0.5em 0;
   padding: 1em;
   overflow: auto;
+  margin-bottom: 1.5em;
 }
 
 .gatsby-highlight-code-line {
