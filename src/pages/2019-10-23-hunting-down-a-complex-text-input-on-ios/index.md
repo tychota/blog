@@ -352,7 +352,7 @@ Only 3 min left 🤯. That sad, no time for a good fix, no time for a PR to Reac
 
 How to fix it quick ? Let's use `patch-package` (a npm tools that help a lot) and remove the secure condition.
 
-```patch
+```diff
 patch-package
 --- a/node_modules/react-native/Libraries/Text/TextInput/RCTBaseTextInputView.m
 +++ b/node_modules/react-native/Libraries/Text/TextInput/RCTBaseTextInputView.m
