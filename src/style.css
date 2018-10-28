@@ -21,7 +21,7 @@ a.has-text-link:hover {
   color: #bf082a !important;
   background-color: #ee7d924d;
 }
-.content p > a {
+.content p > a:not(.gatsby-resp-image-link):hover {
   background-color: #ee7d924d;
 }
 .content *::selection {
