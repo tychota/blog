@@ -16,6 +16,14 @@ module.exports = {
         components: path.join(__dirname, "src/components")
       }
     },
+    {
+      resolve: "gatsby-plugin-google-analytics",
+      options: {
+        trackingId: "UA-102266385-2",
+        anonymize: true,
+        respectDNT: true
+      }
+    },
     "gatsby-plugin-flow",
     {
       resolve: "gatsby-transformer-remark",
