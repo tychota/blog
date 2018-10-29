@@ -60,11 +60,42 @@ module.exports = {
     "gatsby-plugin-sitemap",
     "gatsby-plugin-robots-txt",
     {
+      resolve: "gatsby-plugin-favicon",
+      options: {
+        logo: "./src/images/logo/one-percent-512.png",
+        // This will be overridden by next plugin
+        appName: "One Percent Better", // Inferred with your package.json
+        appDescription: "This is how I try to be one percent better everyday.",
+        developerName: null,
+        developerURL: null,
+        dir: "auto",
+        lang: "en-US",
+        background: "#f5f5f5",
+        theme_color: "#B6001F",
+        display: "minimal-ui",
+        orientation: "portrait",
+        start_url: "/",
+        version: "1.0",
+        icons: {
+          android: true,
+          appleIcon: true,
+          appleStartup: true,
+          coast: true,
+          favicons: true,
+          firefox: true,
+          opengraph: true,
+          twitter: true,
+          yandex: true,
+          windows: true
+        }
+      }
+    },
+    {
       resolve: "gatsby-plugin-manifest",
       options: {
         name: "One Percent Better",
         short_name: "1%",
-        description: "This is how I try to be one perceent better everyday.",
+        description: "This is how I try to be one percent better everyday.",
         theme_color: "#B6001F",
         background_color: "#f5f5f5",
         display: "minimal-ui",
