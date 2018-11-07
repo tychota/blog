@@ -4,8 +4,15 @@ import React from "react";
 import { graphql } from "gatsby";
 import Header from "components/Header";
 import SEO from "components/SEO";
+import Footer from "components/Footer";
 import NeighbourLinks from "components/NeighbourLinks";
 import type { IMarkdownRemark } from "types/gatsby.flow";
+
+import rehypeReact from "rehype-react";
+
+const renderAst = new rehypeReact({
+  createElement: React.createElement
+}).Compiler;
 
 type IProps = {
   data: { markdownRemark: IMarkdownRemark },
@@ -21,7 +28,7 @@ export default class PostTemplate extends React.Component<IProps> {
       data: { markdownRemark },
       pageContext: { prev, next }
     } = this.props;
-    const { frontmatter, html } = markdownRemark;
+    const { frontmatter, htmlAst } = markdownRemark;
     const title = frontmatter && frontmatter.title;
 
     return (
@@ -43,13 +50,11 @@ export default class PostTemplate extends React.Component<IProps> {
           </section>
           <div className="container is-fluid">
             <div className="content">
-              <div
-                dangerouslySetInnerHTML={{ __html: html }}
-                className="grid"
-              />
+              <div className="grid">{renderAst(htmlAst)}</div>
             </div>
             <NeighbourLinks prev={prev} next={next} />
           </div>
+          <Footer />
         </div>
       </>
     );
@@ -59,7 +64,7 @@ export default class PostTemplate extends React.Component<IProps> {
 export const query = graphql`
   query($pathSlug: String!) {
     markdownRemark(frontmatter: { path: { eq: $pathSlug } }) {
-      html
+      htmlAst
       frontmatter {
         title
         datePublished: date(formatString: "YYYY-MM-DDTHH:mm:ssZ")

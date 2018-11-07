@@ -6,6 +6,7 @@ import React from "react";
 
 // #region components
 import Header from "components/Header";
+import Footer from "components/Footer";
 import PostsList from "components/PostsList";
 // #endregion components
 
@@ -45,6 +46,7 @@ export default class AllTagsIndexTemplate extends React.Component<IProps> {
         <div className="main container is-fluid">
           <PostsList posts={posts} />
         </div>
+        <Footer />
       </div>
     );
   }
