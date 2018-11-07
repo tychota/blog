@@ -2,13 +2,23 @@
 const slugify = require("slugify");
 const format = require("date-fns/format");
 const _ = require("lodash");
+const chalk = require("chalk");
 
 // prettier-ignore
 const DATE_FORMAT = ["yyyy","-","mm","-","dd","'T'","-","HH",":","MM",":","ss"];
 
 module.exports = function(plop) {
-  plop.setHelper("isoDate", function(date) {
+  plop.setHelper("isoDateShort", function(date) {
     return format(date, "yyyy-MM-dd");
+  });
+  plop.setHelper("isoDate", function(date) {
+    return date.toISOString();
+  });
+  plop.setHelper("arrayStringify", function(array) {
+    return `[${array
+      .filter(Boolean)
+      .map(a => '"' + a + '"')
+      .join(",")}]`;
   });
   plop.setPrompt("datetime", require("inquirer-datepicker-prompt"));
   plop.setGenerator("blog-article", {
@@ -74,29 +84,41 @@ module.exports = function(plop) {
         filter(answer) {
           if (!answer) return null;
           return answer.split(",");
+        },
+        transformer(answer) {
+          if (!answer) return "";
+          if (_.isArray(answer)) return answer;
+          return answer.split(",").join(" - ");
         }
-        // transformer(answer) {
-        //   if (!answer) return "";
-        //   if (_.isArray(answer)) return answer;
-        //   return answer.split(",").join(" - ");
-        // }
       }
     ],
     actions: [
       answers => {
         const dateFormated = format(answers.date, "yyyy-MM-dd");
-        console.log(`Creating new blog in ${dateFormated}`);
         console.log(
-          answers.title,
-          answers.slug,
-          answers.date,
-          answers.tags,
-          answers.draft
+          chalk.blue(
+            `Creating new blog in ${chalk.bold.underline.blue(dateFormated)}`
+          )
+        );
+        console.log(
+          chalk.blue(`  -> title:   ${chalk.bold.blue(answers.title)}`)
+        );
+        console.log(
+          chalk.blue(`  -> slug:    ${chalk.bold.blue(answers.slug)}`)
+        );
+        console.log(
+          chalk.blue(`  -> isDraft: ${chalk.bold.blue(answers.draft)}`)
+        );
+        console.log(
+          chalk.blue(`  -> tags:    ${chalk.bold.blue(answers.tags)}`)
+        );
+        console.log(
+          chalk.blue(`  -> date:    ${chalk.bold.blue(answers.date)}`)
         );
       },
       {
         type: "add",
-        path: "src/pages/{{isoDate date}}-{{slug}}/index.md",
+        path: "src/pages/{{isoDateShort date}}-{{ slug }}/index.md",
         templateFile: ".plop/templates/blog-article.md.tpl"
       }
     ]
