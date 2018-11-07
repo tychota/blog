@@ -21,7 +21,7 @@ export default class AllTagsIndexTemplate extends React.Component<IProps> {
     } = this.props;
 
     return (
-      <div>
+      <div className="layout">
         <section className="hero is-light is-bold">
           <Header />
           <hr className="hr is-marginless" />

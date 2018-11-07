@@ -22,7 +22,7 @@ export default class Layout extends React.Component<IProps> {
     } = this.props;
 
     return (
-      <div>
+      <div className="layout">
         <navbar className="hero is-light is-bold navbar">
           <Header />
           <hr className="hr is-marginless" />
