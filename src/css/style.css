@@ -1,5 +1,27 @@
+* {
+  font-family: "Calluna";
+  font-feature-settings: "liga", "kern";
+}
+
+body {
+  font-size: 1.2rem;
+}
+pre code {
+  font-size: 1.1rem;
+}
+
 .main {
   padding: 2rem;
+}
+.subtitle,
+.navbar-end,
+.button span {
+  font-family: "Calluna Sans";
+  font-size: 1.4rem;
+}
+
+footer {
+  margin-top: 3rem;
 }
 
 /* Custom property for bulma */
@@ -16,6 +38,7 @@
 }
 .has-text-link {
   color: #e32549 !important;
+  padding: 0.1rem 0.3rem;
 }
 a.has-text-link:hover {
   color: #bf082a !important;
@@ -34,8 +57,12 @@ code[class*="language-"]::selection,
 code[class*="language-"] span::selection {
   background: #ee7d924d !important;
 }
+.content * {
+  font-family: "Calluna Sans";
+}
 .content a {
   color: #e32549 !important;
+  padding: 0.1rem 0.3rem;
 }
 .content a:hover {
   color: #bf082a !important;
@@ -64,12 +91,32 @@ code[class*="language-"] span::selection {
   margin-top: -1.5em;
 }
 
+center code {
+  color: #3a3a3a;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+center + blockquote code {
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre-line;
+}
+center + blockquote,
+center + blockquote + blockquote {
+  text-align: justify;
+}
+center:nth-of-type(2n) + blockquote,
+center:nth-of-type(2n) + blockquote + blockquote {
+  border-right: 5px solid #dbdbdb;
+  border-left: 0;
+}
+
 /* Grid */
-.grid {
+.grid > div {
   padding-top: 2rem;
   display: grid;
   grid-template-columns:
-    [xl-start] 2fr 1.2rem [l-start] 1fr [md-start] minmax(0, 769px)
+    [xl-start] 2fr 1.2rem [l-start] 1fr [md-start] minmax(0, 700px)
     [md-end] 1fr [l-end] 1.2rem 2fr [xl-end];
 }
 
@@ -94,7 +141,7 @@ code[class*="language-"] span::selection {
 
 /* Highlighting colors */
 .gatsby-highlight {
-  background-color: whitesmoke;
+  background-color: #f5f5f5cc;
   border-radius: 0.3em;
   margin: 0.5em 0;
   padding: 1em;

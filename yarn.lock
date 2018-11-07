@@ -5907,6 +5907,13 @@ gatsby-plugin-react-helmet@^3.0.1:
   dependencies:
     "@babel/runtime" "^7.0.0"
 
+gatsby-plugin-remove-trailing-slashes@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-remove-trailing-slashes/-/gatsby-plugin-remove-trailing-slashes-2.0.4.tgz#6a72e0d4c9bf3d29e13fbd83c952e5f2d911f1e9"
+  integrity sha512-VaHbU+FgIh8g9DU9DoW0QS7uDL27M9roPEhS0XQmZA56JcEpGBwEVDN+euv+BNt5IGT4bLxStJJS+t6QK9YKRA==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+
 gatsby-plugin-robots-txt@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-robots-txt/-/gatsby-plugin-robots-txt-1.3.0.tgz#f0d13fc6286e9c9f7cc1a0cbc620bd9a02fa6671"
@@ -5990,6 +5997,16 @@ gatsby-remark-responsive-iframe@^2.0.6:
     bluebird "^3.5.0"
     cheerio "^1.0.0-rc.2"
     lodash "^4.17.10"
+    unist-util-visit "^1.3.0"
+
+gatsby-remark-smartypants@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/gatsby-remark-smartypants/-/gatsby-remark-smartypants-2.0.6.tgz#0f06d27afaf66c1cf47e041de295e54663b1e5d0"
+  integrity sha512-DFTKCwYcolKLu3eeL6+8c94QFyrrOeXQlJ+jsdsTsyILqiAp9Wp0uTKOcrRi/FuJHP8nLG8hegV3TFO4S0vwxQ==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    retext "^5.0.0"
+    retext-smartypants "^3.0.0"
     unist-util-visit "^1.3.0"
 
 gatsby-source-filesystem@^2.0.7:
@@ -11381,6 +11398,14 @@ regjsparser@^0.3.0:
   dependencies:
     jsesc "~0.5.0"
 
+rehype-react@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/rehype-react/-/rehype-react-3.0.3.tgz#868af1b6b454927af8052501910c3cdc531a2b37"
+  integrity sha512-kjejO2ZlEGRvnSjJBfTEd6O7N4UJez2dPHTBT3edHE33iiknURX0ZnuMaOYn8VscATB5xwO9qJKtiGX5iJlt5Q==
+  dependencies:
+    has "^1.0.1"
+    hast-to-hyperscript "^5.0.0"
+
 relay-compiler@1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/relay-compiler/-/relay-compiler-1.5.0.tgz#564f1582c549fa6b4af9d9f09dadb5e239c11055"
@@ -11646,6 +11671,38 @@ retext-english@^3.0.0:
   dependencies:
     parse-english "^4.0.0"
     unherit "^1.0.4"
+
+retext-latin@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/retext-latin/-/retext-latin-2.0.1.tgz#af85394aefd926649add1c43f1ac7af984e2512e"
+  integrity sha512-w+S6PXPh8s94CaIDHvRUtFLeHhePzLMr/gVzZavcDvDlWyQ1MAk0uth24GBSr+RbJvQD7LDUUDeZIqAoZt9j4w==
+  dependencies:
+    parse-latin "^4.0.0"
+    unherit "^1.0.4"
+
+retext-smartypants@^3.0.0:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/retext-smartypants/-/retext-smartypants-3.0.2.tgz#7e499ae914883e0d117ee9e983ee396621e0cb2a"
+  integrity sha512-38v5WiDbn1+syowa24Rnv5raCPHxVy/gEGqfj+K/8piEsnuKwIgPtDwumNwKaedTj3SaFbK5OkWcuwZYxep2jw==
+  dependencies:
+    nlcst-to-string "^2.0.0"
+    unist-util-visit "^1.0.0"
+
+retext-stringify@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/retext-stringify/-/retext-stringify-2.0.1.tgz#d2bfc28d3ba17b7d7a977e935390ded5425023f2"
+  integrity sha512-FmN4T88qBt2t4M4Y2MO3zmQgcfZi2M1ey51RhhqSBUw4+iKQaeas/Ty3VNOCG3VfVeRzQ0WvZniNDIuReURyig==
+  dependencies:
+    nlcst-to-string "^2.0.0"
+
+retext@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/retext/-/retext-5.0.0.tgz#5d9018c4a677d6103c142362d76f50eb1d398bf6"
+  integrity sha1-XZAYxKZ31hA8FCNi129Q6x05i/Y=
+  dependencies:
+    retext-latin "^2.0.0"
+    retext-stringify "^2.0.0"
+    unified "^6.0.0"
 
 rgb-regex@^1.0.1:
   version "1.0.1"

@@ -29,6 +29,7 @@ module.exports = {
       resolve: "gatsby-transformer-remark",
       options: {
         plugins: [
+          "gatsby-remark-smartypants",
           {
             resolve: "gatsby-remark-images",
             options: {
@@ -56,6 +57,7 @@ module.exports = {
         path: `${__dirname}/src/pages`
       }
     },
+    "gatsby-plugin-remove-trailing-slashes",
     "gatsby-plugin-feed",
     "gatsby-plugin-sitemap",
     "gatsby-plugin-robots-txt",
