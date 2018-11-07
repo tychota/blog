@@ -342,7 +342,11 @@ In deed: that prevents the `updateLocalData` to be called that prevents the `enf
 }
 ```
 
-At line 17, in `enforceTextAttributesIfNeeded`, the text color is set: `backedTextInputView.textColor = _textAttributes.effectiveForegroundColor;`
+At line 17, in `enforceTextAttributesIfNeeded`, the text color is set:
+
+```objectivec
+backedTextInputView.textColor = _textAttributes.effectiveForegroundColor;
+```
 
 That is way clearer now.
 

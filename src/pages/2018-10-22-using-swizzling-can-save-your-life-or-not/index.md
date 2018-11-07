@@ -199,7 +199,11 @@ Then we create two selectors:
 
 > A selector is the name used to select a method to execute for an object, or the unique identifier that replaces the name when the source code is compiled. A selector by itself doesn’t do anything. It simply identifies a method.
 
-I see them as the `WHERE methodName = "blabla"` of a hypothetic SQL query that would be `SELECT Method FROM Class1 WHERE methodName = "blabla"`.
+I see them as the `WHERE methodName = "blabla"` of a hypothetic SQL query that would be:
+
+```sql
+SELECT Method FROM Class1 WHERE methodName = "blabla"
+```
 
 Small digression: `loadRequest:` means that the message have one parameter in objective C. No parameter would be `loadRequest` without the trailing `:`. Two args would be `loadRequest:secondArg:`. How weird.
 Reading StackOverflow make it weirder. Some quotes:
