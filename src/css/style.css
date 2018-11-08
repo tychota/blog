@@ -63,10 +63,10 @@ a.has-text-link:hover {
 .content p > a:not(.gatsby-resp-image-link):hover {
   background-color: #ee7d924d;
 }
-.content *::selection {
+*::selection {
   background: #ee7d924d; /* WebKit/Blink Browsers */
 }
-.content *::-moz-selection {
+*::-moz-selection {
   background: #ee7d924d; /* Gecko Browsers */
 }
 code[class*="language-"]::selection,
