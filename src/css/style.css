@@ -7,7 +7,7 @@ body {
   font-size: 1.2rem;
 }
 pre code {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
 .main {
@@ -35,6 +35,9 @@ body,
   display: grid;
   grid-template-rows: auto 1fr auto;
   grid-template-columns: 100%;
+}
+.content + .level {
+  margin-top: 4rem;
 }
 
 /* Custom property for bulma */

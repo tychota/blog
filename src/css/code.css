@@ -30,7 +30,7 @@ green     #859900
 code[class*="language-"],
 pre[class*="language-"] {
   color: #657b83; /* base00 */
-  font-family: Inconsolata, monospace;
+  font-family: dm, monospace;
   text-align: left;
   white-space: pre;
   word-spacing: normal;
@@ -49,10 +49,13 @@ pre[class*="language-"] {
   hyphens: none;
 }
 
+code,
+pre,
 code[class*="language-"] *,
 pre[class*="language-"] * {
-  font-family: Inconsolata, monospace;
-  font-size: 1.1rem;
+  font-family: dm, monospace;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 pre[class*="language-"]::-moz-selection,
@@ -71,10 +74,10 @@ code[class*="language-"] ::selection {
 
 /* Code blocks */
 pre[class*="language-"] {
-  padding: 1.2em;
-  margin: 0.5em 0;
+  padding: 1.2rem;
+  margin: 0.5rem 0;
   overflow: auto;
-  border-radius: 0.3em;
+  border-radius: 0.3rem;
 }
 
 :not(pre) > code[class*="language-"],
@@ -84,8 +87,8 @@ pre[class*="language-"] {
 
 /* Inline code */
 :not(pre) > code[class*="language-"] {
-  padding: 0.1em 0.5em;
-  border-radius: 0.3em;
+  padding: 0.1rem 0.5rem;
+  border-radius: 0.3rem;
   white-space: pre-line;
 }
 
