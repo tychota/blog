@@ -58,6 +58,17 @@ pre[class*="language-"] * {
   font-weight: 500;
 }
 
+.level-item > a {
+  height: unset;
+}
+.level-item > a > span:not([class*="icon"]) {
+  white-space: pre-line;
+}
+
+.navbar-end {
+  margin-right: 1rem;
+}
+
 pre[class*="language-"]::-moz-selection,
 pre[class*="language-"] ::-moz-selection,
 code[class*="language-"]::-moz-selection,
