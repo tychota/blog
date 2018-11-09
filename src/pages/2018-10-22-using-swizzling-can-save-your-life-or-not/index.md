@@ -11,15 +11,15 @@ excerpt: "To swizzle or not to swizzle, that is the question."
 
 Today, an architect doing some post project service was asking me the following question !
 
-> We had to fix a message passing issue from a WebView to react native app. Thus we went to WKWebView from UIWebView, using RN new feature.
+> We had to fix a message passing issue from a WebView to react native app. Thus we went to WKWebView from UIWebView, using RN new features.
 > But now, we have a bug. HTTP 302 (redirect) does not set cookies properly.
 > What should I do ? Fork RN ?
 
 # The digression
 
-It is not to shame iOS but Android verbose syntax sometimes lets more room to customize default behavior.
+It is not to shame iOS but Android verbose syntax sometimes let’s more room to customize default behavior.
 
-Example (java code from [a-year-of-react-native-ssl-pinning](http://www.madebymany.com/stories/a-year-of-react-native-ssl-pinning)): you can define a new HTTP client builder that does SSL pinning
+Example (java code from [a-year-of-react-native-ssl-pinning](http://www.madebymany.com/stories/a-year-of-react-native-ssl-pinning)): you can define a new HTTP client builder that does SSL pinning.
 
 ```java
 package com.example.app;
@@ -83,25 +83,25 @@ And hop, you have new functionality.
 
 ---
 
-iOS is less prone of builder, less object oriented (despite being called objective C ^^). So most of the libraries I know does not offer that customization (I'm pretty sure they are some, just I don't know them yet).
+iOS is less prone of builders, less object oriented (despite being called objective C ^^). So most of the libraries I know does not offer that customization (I'm pretty sure they are some, just I don't know them yet).
 
-But objective C is a versatile language (and that is also doable in swift as they shared a almost common runtime), in the same sense than `javascript` (the prototype ~~code~~ hacks we use to see/write a while ago) is. You can do everything with it, including ~~destroying the world~~ remapping function.
+But objective C is a versatile language (and that is also doable in swift as they shared an almost common runtime), in the same sense as `javascript` (the prototype ~~code~~ hacks we used to see/write a while ago) is. You can do everything with it, including ~~destroying the world~~ remapping function.
 
-And that is not that impressing: in many way objective C internal looks like javascript prototype chain (that my analysis, don't claim that as a fact in interview).
-In deed in objective:
+And that is not that impressing: in many ways objective C internal looks like javascript prototype chain (that my analysis, don't claim that as a fact in interview).
+Indeed in objective:
 
 ```objectivec
 [obj method:argument];
 ```
 
-send the message `method` with the argument `argument` to the object `obj`. Obj will map the message using a `Class Dispatch Table`. That is this dispatch table that each object possess and that you can hack on it to ~~mess up~~ hackily improve your program: looks like a javascript prototype, isn't it ?
+It sends the message `method` with the argument `argument` to the object `obj`. Obj will map the message using a `Class Dispatch Table`. That is this dispatch table that each object possess and that you can hack on it to ~~mess up~~ hackily improve your program: looks like a javascript prototype, doesn't it ?
 
 # Entering Swizzling (back on the topic)
 
 First most of the concept come from [this article](https://medium.com/rocknnull/ios-to-swizzle-or-not-to-swizzle-f8b0ed4a1ce6?_branch_match_id=440752107783156620).
 read it, it will be more correct that my paraphrase here. And then when you come back, you will see all the mistakes in this article ! ^^
 
-**Swizzling is monkey patching, on steroid.** It's in the same time great and terrific.
+**Swizzling is monkey patching, on steroids.** It's in the same time great and terrific.
 
 Here is the gist:
 
@@ -110,9 +110,9 @@ Here is the gist:
 #import <objc/runtime.h>
 ```
 
-We want to override the functionality of WKWebKit so lets import WebKit.
+We want to override the functionality of WKWebKit so let’s import WebKit.
 
-Lets also import objective C runtime, which is mandatory for the swizzling process.
+Let’s also import objective C runtime, which is mandatory for the swizzling process.
 
 ```objectivec
 @implementation WKWebView (Cookie)
@@ -122,9 +122,9 @@ By defining a new fine with `@implementation <CLASS> (<CATEGORY>)` category in o
 
 You can read more about that [here](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html).
 
-Let's now define the swizzling boilerplate (not dependant of the stuff you want to extend).
+Let's now define the swizzling boilerplate (not dependent of the stuff you want to extend).
 
-```objectivec{numberLines: true}
+````objectivec{numberLines: true}
 @implementation WKWebView (Cookie)
 
 + (void)load {
@@ -149,7 +149,7 @@ Let's now define the swizzling boilerplate (not dependant of the stuff you want 
 @end
 ```
 
-Lets break that down:
+Let’s break that down:
 
 ```objectivec
 - (void)load {
@@ -158,7 +158,7 @@ Lets break that down:
     // ....
   })
 }
-```
+````
 
 What about `load` function ? Quoting [apple](https://developer.apple.com/documentation/objectivec/nsobject/1418815-load?language=objc):
 
@@ -177,7 +177,7 @@ What about `load` function ? Quoting [apple](https://developer.apple.com/documen
 
 It is thus the best place to perform runtime logic !
 
-We must ensure that the logic is done once only (as it is not idempotent, if we do swizzling twice we go back to first place 🤪)!
+We must ensure that the logic is done once only (as it is not idempotent if we do swizzling twice we go back to first place 🤪)!
 We are using `dispatch_once` as per [apple doc](https://developer.apple.com/documentation/dispatch/1447169-dispatch_once).
 
 ```objectivec{numberLines: true}
@@ -199,13 +199,13 @@ Then we create two selectors:
 
 > A selector is the name used to select a method to execute for an object, or the unique identifier that replaces the name when the source code is compiled. A selector by itself doesn’t do anything. It simply identifies a method.
 
-I see them as the `WHERE methodName = "blabla"` of a hypothetic SQL query that would be:
+I see them as the `WHERE methodName = "blabla"` of a hypothetical SQL query that would be:
 
-```sql
+````sql
 SELECT Method FROM Class1 WHERE methodName = "blabla"
 ```
 
-Small digression: `loadRequest:` means that the message have one parameter in objective C. No parameter would be `loadRequest` without the trailing `:`. Two args would be `loadRequest:secondArg:`. How weird.
+Small digression: `loadRequest:` means that the message has one parameter in objective C. No parameter would be `loadRequest` without the trailing `:`. Two arguments would be `loadRequest:secondArg:`. How weird.
 Reading StackOverflow make it weirder. Some quotes:
 
 > What you call a parameter name is actually part of the method name. This is difficult to understand if you know only languages like Java or C++ but the method name is actually split into several parts in obj-c. Your method name is not pan, it's pan:longitude: Usually you should try to write method names that read like a sentence, e.g panToLatitude:andLongitude: – Sulthan Jan 7 '12 at 19:17
@@ -218,9 +218,9 @@ or
 
 End of the ~~bashing~~digression.
 
-We have two pointer to method, one to the original one or `defaultMethod`, one to the replacement one or `swizzledMethod`.
+We have two pointers to method, one to the original one or `defaultMethod`, one to the replacement one or `swizzledMethod`.
 
-Lets permute them and we are done.
+Let’s permute them and we are done.
 
 ```objectivec{numberLines: true}
 - (void)load {
@@ -236,12 +236,12 @@ Lets permute them and we are done.
     }
   })
 }
-```
+````
 
-For some reason I'm not sure to figure, there is two case:
+For some reason I'm not sure to figure, there are two cases:
 
-1. the method does no exists in the `Class Dispatch Table` yet (first call ??)
-1. the method exist yet
+1. the method does not exist in the `Class Dispatch Table` yet (first call ??)
+1. the method exists yet
 
 So we need to handle both cases:
 
@@ -273,6 +273,6 @@ Funny.
 Short. No.
 
 Long. Maybe. That super practical to override a dependency of a dependency or a big framework (`RN`, `SDWebImage`).
-But it can (will) break at upgrade. It will add pain to debugging.
+But it can (will) break at upgrades. It will add pain to debugging.
 
-Big power. Big responsability.
+Big power. Big responsibility.

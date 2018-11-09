@@ -4,30 +4,29 @@ date: "2018-10-23"
 draft: false
 title: "Hunting down a complex react native bug in iOS"
 tags: ["Objective C", "react-native", "ios"]
-excerpt: "The client noticed a wrong behavior. The material input we were using on the project was changing
-his color on error ... except for the secureText used for the password. The bug was not happening on android."
+excerpt: "The client noticed a wrong behavior. The material input we were using on the project was changing their color on error ... except for the secureText used for the password. The bug was not happening on android."
 ---
 
 > **History of a bug**: from the bug detection to the fix (that may lead to a React Native PR).
 
 # Prehistory
 
-All started when our PO notified a weird glitch in our client React Native app
+All started when our PO notified a weird glitch in our client React Native app.
 
 ![weird glitch](./glitch.png)
 
 For some reason, the _password input was staying white_ when the form was in error.
-The other input were correctly switching label, content and input underline to black when the form failed.
+The other input was correctly switching label, content and input underline to black when the form failed.
 
 _And that was only happening in iOS_. 😱
 
 ---
 
-I _did let the problem pass_, as there was more important problems.
+I _did let the problem pass_, as there were more important problems.
 
-Later in the week, I see the PR _"fixing"_ this. The PR was more _"hacking around"_ the problem, was changing the style of the input so the problem did not appear.
+Later in the week, I see the PR _"fixing"_ this. The PR was more _"hacking around"_ the problem: it was changing the style of the input so the problem did not appear.
 
-The PR was also medium sized (`+52 -46`), affecting other inputs and in my opinion also a regression UX wise. So I was scared to merge it considering it was risking to break other part of the app. Moreover, I had the strong feeling a less "hacky" solution was possible, provided that I manage to understand what was exactly happening.
+The PR was also medium-sized (`+52 -46`), affecting other inputs and, in my opinion, also a regression UX wise. So I was scared to merge it considering it was risking breaking other parts of the app. Moreover, I had the strong feeling a less "hacky" solution was possible, provided that I manage to understand what was exactly happening.
 
 I ask for an appeal. 30 min were granted to me to investigate the bug. Pff 🤠.
 
@@ -39,11 +38,11 @@ Let's try to narrow the problem by eliminating some root causes hypothesis. An i
 
 ![debugging flow](./flow-debug.png)
 
-I had the strong intuition that the problem has to be in native side (since Android was working fine).
+I had the strong intuition that the problem has to be in the native side (since Android was working fine).
 
-_But it is still worth verifying this by doing some go and see_ in the code base using the debugger: indeed, that even a problem that is platform specific can have many root cause. **Until knowing what I'm looking for, it would be a waste to open the native IDE and look and the code randomly.** 🤡
+_But it is still worth verifying this by doing some go and see_ in the code base using the debugger: indeed, that even a problem that is platform specific can have many root causes. **Until knowing what I'm looking for, it would be a waste to open the native IDE and look and the code randomly.** 🤡
 
-Lets take closer look of our code ! Our component looks like this (simplified/redacted):
+Let’s take a closer look of our code ! Our component looks like this (simplified/redacted):
 
 ```jsx{19,27,36-44}{numberLines: true}
 import { TextInput } from "react-native";
@@ -105,12 +104,12 @@ FormInput.displayName = "FormInput";
 
 Either:
 
-- the `error` props is wrong, so the color is not set
-- the `touched` props is wrong, then the error is not displayed
+- the `error` props are wrong, so the color is not set
+- the `touched` props are wrong, then the error is not displayed
 - the actual material input is broken
 - RN has a bug
 
-By putting a breakpoint in React Native debugger in the implementation of `react-native-text-field` [here](https://github.com/n4kz/react-native-material-textfield/blob/master/src/components/field/index.js#L509), I did invalidate the first three hypothesis.
+By putting a breakpoint in React Native debugger in the implementation of `react-native-text-field` [here](https://github.com/n4kz/react-native-material-textfield/blob/master/src/components/field/index.js#L509), I did invalidate the first three hypotheses.
 
 It is confirmed, it is a bug in RN 😰 And I have only 20 min left 😱.
 
@@ -122,7 +121,7 @@ So lets open XCode and press `Command` + `O` to quick open.
 
 ![XCode](./xcode-1.png)
 
-React Native has a concept of View Manager. As far as I understand, it is a singleton responsible to call the underlying view (for render) and the underlying shadow view (for layout) and update the native properties.
+React Native has a concept of View Manager. As far as I understand, it is a singleton responsible for calling the underlying view (for render) and the underlying shadow view (for layout) and update the native properties.
 
 Not that on RN iOS there is a strong heritage hierarchy for text input view manager.
 
@@ -291,7 +290,7 @@ When the color is changed, the `setAttributedText` is somehow called.
 }
 ```
 
-This function check if the new text equal the old text at line 15, calling:
+This function check if the new text equals the old text at line 15, calling:
 
 ```objectivec{13}{numberLines: true}
 - (BOOL)textOf:(NSAttributedString*)newText equals:(NSAttributedString*)oldText{
@@ -318,7 +317,7 @@ This function check if the new text equal the old text at line 15, calling:
 But this check does a special job for `secureText` (at line 13) aka password field. When the text does not change, but only the color, the secure text equal the old one (which is not the case of normal field).
 The custom check is documented but I don't think the impact is the intended one.
 
-In deed: that prevents the `updateLocalData` to be called that prevents the `enforceTextAttributesIfNeeded` to be called.
+Indeed, that prevents the `updateLocalData` to be called that prevents the `enforceTextAttributesIfNeeded` to be called.
 
 ```objectivec{3,17}{numberLines: true}
 - (void)updateLocalData
@@ -374,6 +373,6 @@ patch-package
 
 Is it a good fix ? Probably not !
 
-Does it work on my project ? Yes, I tested some edge case and apparently removing it break nothing. Apparently ...
+Does it work on my project ? Yes, I tested some edge case and apparently removing it breaks nothing. Apparently ...
 
-My next steps are to contact RN members and try to know more ! **But that is for another time.**
+My next steps are to contact RN members and try to know more ! **but that is for another time.**
