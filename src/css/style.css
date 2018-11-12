@@ -52,6 +52,9 @@ body,
 .navbar-item img {
   max-height: 4rem;
 }
+.navbar-end .navbar-item {
+  font-family: "Calluna Sans";
+}
 .has-text-link {
   color: #e32549 !important;
   padding: 0.1rem 0.3rem;
@@ -125,6 +128,10 @@ center:nth-of-type(2n) + blockquote,
 center:nth-of-type(2n) + blockquote + blockquote {
   border-right: 5px solid #dbdbdb;
   border-left: 0;
+}
+
+.footer {
+  padding: 1.5rem;
 }
 
 /* Grid */

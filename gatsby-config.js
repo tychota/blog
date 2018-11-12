@@ -8,6 +8,13 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: "images",
+        path: path.join(__dirname, "src/images")
+      }
+    },
+    {
       resolve: "gatsby-plugin-root-import",
       options: {
         types: path.join(__dirname, "types"),
@@ -48,7 +55,6 @@ module.exports = {
       }
     },
     "gatsby-plugin-catch-links",
-    "gatsby-transformer-sharp",
     "gatsby-plugin-sharp",
     {
       resolve: "gatsby-source-filesystem",
@@ -57,6 +63,7 @@ module.exports = {
         path: `${__dirname}/src/pages`
       }
     },
+    "gatsby-transformer-sharp",
     "gatsby-plugin-remove-trailing-slashes",
     "gatsby-plugin-feed",
     "gatsby-plugin-sitemap",

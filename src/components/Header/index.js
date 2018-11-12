@@ -1,5 +1,6 @@
 // @flow
 import React from "react";
+import Img from "gatsby-image";
 import { StaticQuery, graphql, Link } from "gatsby";
 import { TitleAndDescription } from "components/Header/TitleAndDescription";
 
@@ -14,34 +15,42 @@ export default class Header extends React.Component<{}> {
         <div className="navbar-brand">
           <div className="navbar-item is-hidden-mobile">
             <Link to="/">
-              <img src={require("images/logo/one-percent-512.png")} alt="" />
+              <StaticQuery
+                query={logoQuery}
+                render={data => {
+                  if (!data.file) return null;
+                  return <Img fixed={data.file.childImageSharp.fixed} alt="" />;
+                }}
+              />
             </Link>
           </div>
           <div className="navbar-item">
             <Link to="/">
-              <StaticQuery
-                query={query}
-                render={data => <TitleAndDescription data={data} />}
-              />
+              <TitleAndDescription />
             </Link>
           </div>
         </div>
         <div class="navbar-end">
-          <Link to="/tags" className="navbar-item has-text-link">
-            Post by Tags
-          </Link>
+          <div className="navbar-item">
+            <Link to="/tags" className="has-text-link">
+              Post by Tags
+            </Link>
+          </div>
         </div>
       </nav>
     );
   }
 }
 
-const query = graphql`
+const logoQuery = graphql`
   {
-    site {
-      siteMetadata {
-        title
-        description
+    file(relativePath: { eq: "logo/one-percent-512.png" }) {
+      childImageSharp {
+        # Specify the image processing specifications right in the query.
+        # Makes it trivial to update as your page's design changes.
+        fixed(width: 64, height: 64) {
+          ...GatsbyImageSharpFixed
+        }
       }
     }
   }
