@@ -3,7 +3,9 @@ const path = require("path");
 module.exports = {
   siteMetadata: {
     title: "One percent",
+    alternateName: "Tycho Tatitscheff · One percent better every day.",
     description: "Trying to be better every day.",
+    myDescription: `Tycho Tatitscheff is a coach, architect-developer and occasional speaker at meetups (aiming for conferences). He quickly builds amazing products through greater team communication around problem solving, better people through coaching, and good use of pragmatic technologies. He lives in Paris, France.`,
     siteUrl: "https://blog.tycoach.me"
   },
   plugins: [
@@ -37,6 +39,7 @@ module.exports = {
       options: {
         plugins: [
           "gatsby-remark-smartypants",
+          "gatsby-remark-copy-linked-files",
           {
             resolve: "gatsby-remark-images",
             options: {

@@ -8,6 +8,7 @@ import React from "react";
 import Header from "components/Header";
 import Footer from "components/Footer";
 import PostsList from "components/PostsList";
+import SEO from "components/SEO";
 // #endregion components
 
 // #region types
@@ -27,6 +28,7 @@ export default class AllTagsIndexTemplate extends React.Component<IProps> {
 
     return (
       <div className="layout">
+        <SEO postImage={null} />
         <section className="hero is-light is-bold">
           <Header />
           <hr className="hr is-marginless" />

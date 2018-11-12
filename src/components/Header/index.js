@@ -30,7 +30,7 @@ export default class Header extends React.Component<{}> {
             </Link>
           </div>
         </div>
-        <div class="navbar-end">
+        <div className="navbar-end">
           <div className="navbar-item">
             <Link to="/tags" className="has-text-link">
               Post by Tags

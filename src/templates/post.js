@@ -68,6 +68,8 @@ export const query = graphql`
       frontmatter {
         title
         datePublished: date(formatString: "YYYY-MM-DDTHH:mm:ssZ")
+        path
+        excerpt
       }
     }
   }

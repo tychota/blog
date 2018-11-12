@@ -5,7 +5,7 @@ draft: true
 title: "Building programs as solid as toyota in top gear."
 tags: ["static-typing"]
 excerpt:
-  "Put your react program in the worst situation and it will surive. That is the
+  "Put your react program in the worst situation and it will survive. That is the
   goal."
 ---
 

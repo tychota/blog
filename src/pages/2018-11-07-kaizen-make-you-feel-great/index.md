@@ -4,7 +4,7 @@ date: "2018-11-07T16:37:48.399Z"
 draft: false
 title: "Kaizen makes you feel great"
 tags: ["lean", "kaizen", "coaching"]
-excerpt: ""
+excerpt: "Kaizen is a way to keep learning, even in the tasks we do everyday. A dialogue with a newcomers"
 ---
 
 _I'm working on projects outside of the main office. I mean not far away (around 20 min walk) but still far enough so I don't eat every lunch at the office._

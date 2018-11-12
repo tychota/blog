@@ -4,8 +4,8 @@ import React from "react";
 export default class Footer extends React.Component<{}> {
   render() {
     return (
-      <footer class="footer">
-        <div class="content has-text-centered">
+      <footer className="footer">
+        <div className="content has-text-centered">
           <p>
             <strong>Blog</strong> by{" "}
             <a href="https://blog.tycoach.me">Tycho Tatitscheff</a>.

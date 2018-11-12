@@ -109,7 +109,7 @@ Either:
 - the actual material input is broken
 - RN has a bug
 
-By putting a breakpoint in React Native debugger in the implementation of `react-native-text-field` [here](https://github.com/n4kz/react-native-material-textfield/blob/master/src/components/field/index.js#L509), I did invalidate the first three hypotheses.
+By putting a breakpoint in React Native debugger in the [implementation of `react-native-text-field`](https://github.com/n4kz/react-native-material-textfield/blob/master/src/components/field/index.js#L509), I did invalidate the first three hypotheses.
 
 It is confirmed, it is a bug in RN 😰 And I have only 20 min left 😱.
 
@@ -240,7 +240,9 @@ The view manager then call the view to upgrade the native properties. Done.
 
 **Well but why then the TextInput does not update ?**
 
-![Why ?????](https://media.giphy.com/media/EdW1pjRlyMTCM/giphy.gif)
+<video autoplay loop muted playsinline disableRemotePlayback>
+  <source src="giphy.webm" type="video/webm">
+</video>
 
 Head over `RCTBaseTextInputView.m` (that is the last big paste of RN code ^^):
 

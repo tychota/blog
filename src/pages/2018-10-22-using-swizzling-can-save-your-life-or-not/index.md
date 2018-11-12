@@ -4,7 +4,7 @@ date: "2018-10-22"
 draft: false
 title: "Using Swizzling to fix RN can save your life. Or Not."
 tags: ["Objective C", "react-native", "ios", "android"]
-excerpt: "To swizzle or not to swizzle, that is the question."
+excerpt: "To swizzle or not to swizzle, that is the question. Method swizzling is the process of changing the implementation of an existing selector."
 ---
 
 # The problem

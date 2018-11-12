@@ -3,6 +3,8 @@ import React from "react";
 import Header from "components/Header";
 import Footer from "components/Footer";
 import PostsList from "components/PostsList";
+import SEO from "components/SEO";
+
 import { graphql } from "gatsby";
 import type {
   IMarkdownRemarkConnection,
@@ -23,7 +25,8 @@ export default class Layout extends React.Component<IProps> {
 
     return (
       <div className="layout">
-        <navbar className="hero is-light is-bold navbar">
+        <SEO postImage={null} />
+        <div className="hero is-light is-bold navbar">
           <Header />
           <hr className="hr is-marginless" />
           <section className="section">
@@ -38,7 +41,7 @@ export default class Layout extends React.Component<IProps> {
               </div>
             </div>
           </section>
-        </navbar>
+        </div>
         <div className="main container is-fluid">
           {posts && (
             <PostsList
