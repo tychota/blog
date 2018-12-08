@@ -201,7 +201,7 @@ Then we create two selectors:
 
 I see them as the `WHERE methodName = "blabla"` of a hypothetical SQL query that would be:
 
-````sql
+```sql
 SELECT Method FROM Class1 WHERE methodName = "blabla"
 ```
 
@@ -236,7 +236,7 @@ Let’s permute them and we are done.
     }
   })
 }
-````
+```
 
 For some reason I'm not sure to figure, there are two cases:
 
