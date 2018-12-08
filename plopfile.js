@@ -115,6 +115,7 @@ module.exports = function(plop) {
         console.log(
           chalk.blue(`  -> date:    ${chalk.bold.blue(answers.date)}`)
         );
+        return "gather answers to generate blop article";
       },
       {
         type: "add",
