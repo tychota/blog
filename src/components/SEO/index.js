@@ -108,7 +108,6 @@ class SEO extends React.Component<IProps> {
           }
         `}
         render={({ site: { siteMetadata: seo } }) => {
-          console.log("blop", seo);
           const postMeta =
             (this.props.postData && this.props.postData.frontmatter) || {};
 
@@ -137,7 +136,7 @@ class SEO extends React.Component<IProps> {
                 {title}
               </title>
 
-              <base target="_blank" href={URL} />
+              {/* <base target="_blank" href={URL} /> */}
 
               <html lang="en" amp />
               <noscript>This blog needs javascript to work :/</noscript>
