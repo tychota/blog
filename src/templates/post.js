@@ -22,7 +22,32 @@ type IProps = {
   }
 };
 
+// Taken from https://github.com/adhrinae/gatsby-blog/blob/master/src/templates/Post.js, under MIT
+function initUtterances() {
+  const utterancesConfig = {
+    src: "https://utteranc.es/client.js",
+    repo: "tychota/blog",
+    label: "comments",
+    branch: "master",
+    async: "true",
+    "issue-term": "pathname",
+    crossorigin: "anonymous"
+  };
+  const utterances = document.createElement("script");
+  const aboutBox = document.querySelector(".grid");
+
+  Object.keys(utterancesConfig).forEach(configKey => {
+    utterances.setAttribute(configKey, utterancesConfig[configKey]);
+  });
+
+  aboutBox && aboutBox.insertAdjacentElement("afterend", utterances);
+}
+
 export default class PostTemplate extends React.Component<IProps> {
+  componentDidMount() {
+    initUtterances();
+  }
+
   render() {
     const {
       data: { markdownRemark },

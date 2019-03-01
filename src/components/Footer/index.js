@@ -16,9 +16,15 @@ export default class Footer extends React.Component<{}> {
             <br />
             The website content is licensed{" "}
             <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
-              CC BY NC SA 4.0
+              CC&nbsp;BY&nbsp;NC&nbsp;SA&nbsp;4.0
             </a>
             .
+            <br />
+            Contribution{" "}
+            <a href="https://github.com/tychota/blog/blob/master/CONTRIBUTING.md">
+              welcomed
+            </a>
+            😍
           </p>
         </div>
       </footer>
