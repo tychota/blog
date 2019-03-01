@@ -2,12 +2,12 @@
 path: "/investigating-network--step-1"
 date: "2019-01-28T17:26:22.831Z"
 draft: false
-title: "Debugging networks on Android and iOS (step 1)"
+title: "Debugging Networks on Android and iOS (step 1)"
 tags: ["network", "android", "ios", "charles", "certificates"]
 excerpt: ""
 ---
 
-# Why charles?
+# Why Charles?
 
 [Charles Proxy](https://www.charlesproxy.com/) is an awesome proxy with a nice interface for OSX.
 
@@ -15,9 +15,9 @@ I mean, you can:
 
 - debug all your connection that goes through your mac
 - act as a SOCKS/HTTP proxy (so you can configure your phone to this proxy)
-- support SSL connections (Charles play the man-in-the-middle)
-- perform rewrite on fly (change headers, change url, response)
-- map request to your server (insteading of using remote server)
+- support SSL connections (Charles plays the man-in-the-middle)
+- perform rewrite on the fly (change headers, change URL, response)
+- map request to your server (instead of using a remote server)
 - throttle networks
 - see request in JSON, or protobuff with nice UI
 - spoof DNS
@@ -25,13 +25,13 @@ I mean, you can:
 
 Nothing Owasp ZAP or other free proxy can't do but with a nicer interface.
 
-Last but not leeast the icon is just awesome.
+Last but not least, the icon is just awesome.
 
 ![Charles](https://www.charlesproxy.com/static/img/charles_hdr.06351fb7.png)
 
-Hence, I did buy Charles and so far, I'm happy with it. That was a small disclaimer but I encourage to check that out.
+Hence, I did buy Charles and so far, I'm happy with it. That was a small disclaimer but I encourage checking that out.
 
-# How to install charles?
+# How to install Charles?
 
 ## iOS
 
@@ -43,17 +43,17 @@ You should enable proxy in your settings:
 
 Then you should head up to [https://chls.pro/ssl](https://chls.pro/ssl) and install the profile.
 
-| ![charle-website](./resized/chls-pro.jpeg) | ![charles-profile](./resized/ios-profile.jpeg) |
+| ![charle-website](./resized/chls-pro.jpeg) | ![Charles-profile](./resized/ios-profile.jpeg) |
 | :----------------------------------------: | :--------------------------------------------: |
 
 
-Last but not least you should trust your new profile, since iOS 10.3
+Last but not least, you should trust your new profile, since iOS 10.3.
 
 ![ios-wifi-menu](./resized/ios-trust.jpeg)
 
 ## Android
 
-First you should enable proxy in Android by going to your wifi and editing it:
+First you should enable proxy in Android by going to your WIFI and editing it:
 
 ![android-wifi-menu](./resized/android-wifi.jpeg)
 
@@ -70,11 +70,9 @@ In android manifest:
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <!-- ... -->
-
     <application
         android:networkSecurityConfig="@xml/network_security_config">
+    </application>
 </manifest>
 ```
 
@@ -102,4 +100,4 @@ and include the certificate public part (in `*.pem` format) inside `res/@raw`:
 - the certificates are only OK to inspect the app
 - you can debug production app
 
-> In the next part we will see together what you can seee in Charles.
+> In the next part we will see together what you can see in Charles.
