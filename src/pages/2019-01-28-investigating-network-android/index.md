@@ -1,8 +1,8 @@
 ---
-path: "/investigating-network"
+path: "/investigating-network--step-1"
 date: "2019-01-28T17:26:22.831Z"
 draft: false
-title: "Debugging networks on Android and iOS"
+title: "Debugging networks on Android and iOS (step 1)"
 tags: ["network", "android", "ios", "charles", "certificates"]
 excerpt: ""
 ---
@@ -101,3 +101,5 @@ and include the certificate public part (in `*.pem` format) inside `res/@raw`:
 - you don't include security flow as only the dev have their private key
 - the certificates are only OK to inspect the app
 - you can debug production app
+
+> In the next part we will see together what you can seee in Charles.
