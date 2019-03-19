@@ -70,6 +70,7 @@ module.exports = {
     "gatsby-plugin-remove-trailing-slashes",
     "gatsby-plugin-feed",
     "gatsby-plugin-sitemap",
+    "gatsby-plugin-twitter",
     "gatsby-plugin-robots-txt",
     {
       resolve: "gatsby-plugin-favicon",

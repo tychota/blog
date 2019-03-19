@@ -1,6 +1,7 @@
 * {
   font-family: "Calluna";
   font-feature-settings: "liga", "kern";
+  text-align: justify;
 }
 
 body {
@@ -23,6 +24,9 @@ pre code {
 footer {
   margin-top: 3rem;
 }
+footer * {
+  text-align: center;
+}
 html,
 body,
 #___gatsby,
@@ -38,6 +42,13 @@ body,
 }
 .content + .level {
   margin-top: 4rem;
+}
+
+.twitter-tweet {
+  margin-top: 0px !important;
+  margin-bottom: 24px !important;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Custom property for bulma */
