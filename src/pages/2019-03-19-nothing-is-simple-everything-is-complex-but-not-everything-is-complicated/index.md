@@ -2,7 +2,7 @@
 path: "/nothing-is-simple-everything-is-complex-but-not-everything-is-complicated"
 date: "2019-03-19T15:45:40.802Z"
 draft: true
-title: "Nothing is simple, everything is complex, but not everything is complicated"
+title: "Everything is complex, but not everything is complicated"
 tags: ["dan-abramov", "rant", "explication", "complixity"]
 excerpt: ""
 ---

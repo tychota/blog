@@ -2,8 +2,7 @@
 import React from "react";
 import { Link } from "gatsby";
 
-import { parse, stringify } from "query-string";
-import { navigate } from "@reach/router";
+import { parse } from "query-string";
 
 type ITag = {
   name: string | null,
