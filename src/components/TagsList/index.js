@@ -15,7 +15,10 @@ type IProps = {
 export default class TagsList extends React.Component<IProps> {
   render() {
     const { tags } = this.props;
-    const search = parse(window.location.search);
+    const search =
+      typeof window !== "undefined" ? parse(window.location.search) : {};
+    const searchQP =
+      typeof window !== "undefined" ? window.location.search : "";
 
     return (
       <div className="tile is-ancestor is-vertical">
@@ -32,7 +35,7 @@ export default class TagsList extends React.Component<IProps> {
                   className="tile notification is-light  is-child box"
                 >
                   <Link
-                    to={`/tags/${tagName}${window.location.search}`}
+                    to={`/tags/${tagName}${searchQP}`}
                     className="subtitle has-text-link"
                   >
                     {tagName}

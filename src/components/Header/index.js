@@ -3,11 +3,12 @@ import React from "react";
 import Img from "gatsby-image";
 import { StaticQuery, graphql, Link } from "gatsby";
 import { TitleAndDescription } from "components/Header/TitleAndDescription";
-import { parse, stringify } from "query-string";
 
 export default class Header extends React.Component<{}> {
   render() {
-    const search = parse(window.location.search);
+    const searchQP =
+      typeof window !== "undefined" ? window.location.search : "";
+
     return (
       <nav
         className="navbar hero-head"
@@ -16,7 +17,7 @@ export default class Header extends React.Component<{}> {
       >
         <div className="navbar-brand">
           <div className="navbar-item is-hidden-mobile">
-            <Link to={`/${window.location.search}`}>
+            <Link to={`/${searchQP}`}>
               <StaticQuery
                 query={logoQuery}
                 render={data => {
@@ -27,17 +28,14 @@ export default class Header extends React.Component<{}> {
             </Link>
           </div>
           <div className="navbar-item">
-            <Link to={`/${window.location.search}`}>
+            <Link to={`/${searchQP}`}>
               <TitleAndDescription />
             </Link>
           </div>
         </div>
         <div className="navbar-end">
           <div className="navbar-item">
-            <Link
-              to={`/tags${window.location.search}`}
-              className="has-text-link"
-            >
+            <Link to={`/tags${searchQP}`} className="has-text-link">
               Post by Tags
             </Link>
           </div>

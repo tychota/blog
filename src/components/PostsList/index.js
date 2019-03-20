@@ -13,14 +13,14 @@ type IProps = {
 export default class PostsList extends React.Component<IProps> {
   render() {
     const { posts } = this.props;
+    const search =
+      typeof window !== "undefined" ? parse(window.location.search) : {};
     if (!posts) return null;
     return (
       <div className="tile is-ancestor is-vertical">
         {posts
           .filter(
-            node =>
-              parse(window.location.search).showDraft ||
-              !idx(node, _ => _.frontmatter.draft)
+            node => search.showDraft || !idx(node, _ => _.frontmatter.draft)
           )
           .map(post => {
             if (!post) return null;
