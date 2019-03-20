@@ -20,15 +20,20 @@ const createTagPages = (createPage, posts) => {
     }
   });
 
-  const tags = Object.keys(postsByTag);
+  const tags = Object.entries(postsByTag).map(([tag, posts]) => ({
+    name: tag,
+    hasOnlyDraft: posts.every(node => node.frontmatter.draft)
+  }));
 
   createPage({
     path: "/tags",
     component: allTagsIndexTemplate,
-    context: { tags: tags.sort() }
+    context: {
+      tags: tags.sort((tagA, tagB) => tagA.name.localeCompare(tagB.name))
+    }
   });
 
-  tags.forEach(tagName => {
+  tags.forEach(({ name: tagName }) => {
     const posts = postsByTag[tagName];
 
     createPage({
@@ -53,11 +58,11 @@ exports.createPages = ({ graphql, actions }) => {
         query {
           allMarkdownRemark(
             sort: { order: ASC, fields: [frontmatter___date] }
-            filter: { frontmatter: { draft: { ne: true } } }
           ) {
             edges {
               node {
                 frontmatter {
+                  draft
                   path
                   title
                   tags

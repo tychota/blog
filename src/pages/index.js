@@ -59,13 +59,11 @@ export default class Layout extends React.Component<IProps> {
 
 export const query = graphql`
   query HomepageQuery {
-    allMarkdownRemark(
-      sort: { order: DESC, fields: [frontmatter___date] }
-      filter: { frontmatter: { draft: { ne: true } } }
-    ) {
+    allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
       edges {
         node {
           frontmatter {
+            draft
             title
             path
             date

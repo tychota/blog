@@ -11,8 +11,12 @@ import Footer from "components/Footer";
 import SEO from "components/SEO";
 // #endregion components
 
+type ITag = {
+  name: string | null,
+  hasOnlyDraft: boolean | null
+};
 type IProps = {
-  pageContext: { tags: Array<string | null> }
+  pageContext: { tags: Array<ITag> }
 };
 
 export default class AllTagsIndexTemplate extends React.Component<IProps> {
