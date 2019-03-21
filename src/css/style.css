@@ -148,6 +148,10 @@ center:nth-of-type(2n) + blockquote + blockquote {
   padding: 1.5rem;
 }
 
+.box * {
+  text-align: left;
+}
+
 /* Grid */
 .grid > div {
   padding-top: 2rem;

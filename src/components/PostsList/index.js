@@ -37,7 +37,7 @@ export default class PostsList extends React.Component<IProps> {
                 <div key={frontmatter.path} className="box">
                   <Link
                     to={frontmatter.path}
-                    className="title has-text-link is-3"
+                    className="title has-text-link is-4"
                   >
                     {frontmatter.title}
                   </Link>
@@ -54,7 +54,7 @@ export default class PostsList extends React.Component<IProps> {
                           <span
                             key={tag}
                             className="tag is-light is-medium"
-                            style={{ marginRight: 10 }}
+                            style={{ marginRight: 10, marginBottom: 10 }}
                           >
                             <Link to={`/tags/${tag}${searchQP}`} className="">
                               #{tag}

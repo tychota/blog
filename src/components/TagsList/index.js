@@ -34,7 +34,7 @@ export default class TagsList extends React.Component<IProps> {
                   <div key={tagName} className="box">
                     <Link
                       to={`/tags/${tagName}${searchQP}`}
-                      className="title has-text-link is-3"
+                      className="title has-text-link is-4"
                     >
                       #{tagName}
                     </Link>
