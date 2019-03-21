@@ -1,7 +1,7 @@
 ---
 path: "/breaking-the-circular-deps-1"
 date: "2019-03-21T14:55:21.587Z"
-draft: true
+draft: false
 title: "Breaking the circular deps (part 1)"
 tags: ["typescript", "dependencies", "architecture"]
 excerpt: ""
@@ -11,25 +11,7 @@ excerpt: ""
 
 On my project, we had such a dependencies graph.
 
-```bob-svg
- +----------+
- |          |
- | Endpoint +<---------------+
- |          |                |
- +---+------+                |
-     |                   +---+---------+
-     |                   |             |
-     |                   | middlewares |
-     |                   |             |
-     |                   +------+------+
-     |                          ^
-     v                          |
-+----+------+                   |
-|           |                   |
-| Ressource +-------------------+
-|           |
-+-----------+
-```
+![circular-deps](./circular-deps.svg)
 
 Now React Native now properly warn dependency cycles.
 
@@ -61,21 +43,7 @@ cachedApi
 
 We did architecture the api layer this way:
 
-```bob-svg
-+-------+        +------------+
-|       |  Use   |            |
-| Sagas +- - - ->+ Ressources |
-|       |        |            |
-+-------+        +------+-----+
-                        |
-               Depends  |
-                        v
-                 +------+-----+
-                 |            |
-                 | Endpoints  |
-                 |            |
-                 +------------+
-```
+![architecture](./architecture.svg)
 
 So:
 
@@ -188,21 +156,7 @@ export const loginMiddleware: Middleware = () => {
 
 If not, we actually perform the request by awaiting `next`. That will be familiar to you if you ever used `koa`.
 
-```bob-svg
-  MIDDLEWARE   ONE       MID.  TWO                 MID. N
-
-+-------------------+   +----------+                +----------+
-|                   |   |          |                |          |
-|  Request part     +-->+          +---- -- -- ---->+          +--------->
-|                   |   |          |                |          |
-|                   |   |          |                |          |
-|  await next       |   |await next|                |await next|          API Call
-|                   |   |          |                |          |
-|                   |   |          |                |          |
-|  Response part    +<--+          +<--- -- -- -----+          +<--------+
-|                   |   |          |                |          |
-+-------------------+   +----------+                +----------+
-```
+![middleware](./middleware.svg)
 
 ```typescript
 export const loginMiddleware: Middleware = () => {
@@ -316,25 +270,7 @@ export class AuthRessource {
 
 But now you see the problem:
 
-```bob-svg
- +--------------+                                            +--------------+
- |              |                                            |              |
- | Endpoint.auth|<---------------+     +-------------------->+ Endpoint.user|
- |              |                |     |                     |              |
- +-------+------+                |     |                     +-------+------+
-         |                   +---+-----+---+                         |
-         |                   |             |                         |
-         |                   | middlewares |                         |
-         |                   |             |                         |
-         |                   +------+------+                         |
-         |                          ^                                |
-         v                          |                                v
-+--------+------+                   |                        +-------+-------+
-|               |                   |                        |               |
-| AuthRessource +-------------------+                        | UserRessource |
-|               |                                            |               |
-+---------------+                                            +---------------+
-```
+![final](./final.svg)
 
 And boom a dependency cycle.
 

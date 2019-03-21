@@ -45,7 +45,8 @@ body,
 main * {
   text-align: justify;
 }
-main .remark-draw {
+main .remark-draw,
+main img {
   text-align: center;
 }
 
