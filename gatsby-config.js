@@ -41,6 +41,15 @@ module.exports = {
           "gatsby-remark-smartypants",
           "gatsby-remark-copy-linked-files",
           {
+            resolve: "gatsby-remark-draw",
+            options: {
+              bob: {
+                fontFamily: "Dank Mono",
+                fontSize: 16
+              }
+            }
+          },
+          {
             resolve: "gatsby-remark-images",
             options: {
               maxWidth: 1000,

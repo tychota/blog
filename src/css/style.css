@@ -1,7 +1,6 @@
 * {
   font-family: "Calluna";
   font-feature-settings: "liga", "kern";
-  text-align: justify;
 }
 
 body {
@@ -42,6 +41,12 @@ body,
 }
 .content + .level {
   margin-top: 4rem;
+}
+main * {
+  text-align: justify;
+}
+main .remark-draw {
+  text-align: center;
 }
 
 .twitter-tweet {
@@ -95,7 +100,6 @@ code[class*="language-"] span::selection {
 }
 .content a {
   color: #e32549 !important;
-  padding: 0.1rem 0.3rem;
 }
 .content a:hover {
   color: #bf082a !important;

@@ -42,7 +42,7 @@ export default class PostsList extends React.Component<IProps> {
                     {frontmatter.title}
                   </Link>
                   {frontmatter.date ? (
-                    <h4 className="subtitle is-4" style={{ marginTop: 10 }}>
+                    <h4 className="subtitle is-5" style={{ marginTop: 10 }}>
                       {formatDistance(frontmatter.date, new Date(), {
                         addSuffix: true
                       })}

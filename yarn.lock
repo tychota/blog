@@ -5993,6 +5993,15 @@ gatsby-remark-copy-linked-files@^2.0.11:
     probe-image-size "^4.0.0"
     unist-util-visit "^1.3.0"
 
+gatsby-remark-draw@^1.0.16:
+  version "1.0.16"
+  resolved "https://registry.yarnpkg.com/gatsby-remark-draw/-/gatsby-remark-draw-1.0.16.tgz#94b54dbb9bf5729b426eef8c31afe18afb8d12d0"
+  integrity sha512-oBVRgkjhd08KnUVr6qySyfMbarSh3GBLREqTunNYdktHmZyLzDsY5zp6C+BTEUknL48+PoiQ1N0Z3gc+8GaLmg==
+  dependencies:
+    skyrta "^0.1.8"
+    unist-util-visit "^1.3.0"
+    url-join "^4.0.0"
+
 gatsby-remark-images@^3.0.10:
   version "3.0.10"
   resolved "https://registry.yarnpkg.com/gatsby-remark-images/-/gatsby-remark-images-3.0.10.tgz#a69b2d99246e285dc3a7a317acacbabb40948bd6"
@@ -12392,6 +12401,15 @@ sitemap@^1.12.0:
     underscore "^1.7.0"
     url-join "^1.1.0"
 
+skyrta@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/skyrta/-/skyrta-0.1.8.tgz#54b57422191e093da6bfdb49745fd4a8bd7b678b"
+  integrity sha512-TSWzzz1+HHiNsTachF3ndEVoPauC0Dw4H/8unT9O9Fxs6kZkNmhESRjkqIYtdDh8KO5Oeg24hcxVIyYG/093VA==
+  dependencies:
+    cheerio "^1.0.0-rc.2"
+    tmp "^0.0.33"
+    which "^1.3.0"
+
 slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
@@ -13784,6 +13802,11 @@ url-join@^1.1.0:
   resolved "https://registry.yarnpkg.com/url-join/-/url-join-1.1.0.tgz#741c6c2f4596c4830d6718460920d0c92202dc78"
   integrity sha1-dBxsL0WWxIMNZxhGCSDQySIC3Hg=
 
+url-join@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/url-join/-/url-join-4.0.0.tgz#4d3340e807d3773bda9991f8305acdcc2a665d2a"
+  integrity sha1-TTNA6AfTdzvamZH4MFrNzCpmXSo=
+
 url-loader@^1.0.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/url-loader/-/url-loader-1.1.2.tgz#b971d191b83af693c5e3fea4064be9e1f2d7f8d8"
@@ -14245,7 +14268,7 @@ which-pm-runs@^1.0.0:
   resolved "https://registry.yarnpkg.com/which-pm-runs/-/which-pm-runs-1.0.0.tgz#670b3afbc552e0b55df6b7780ca74615f23ad1cb"
   integrity sha1-Zws6+8VS4LVd9rd4DKdGFfI60cs=
 
-which@^1.2.10, which@^1.2.14, which@^1.2.9:
+which@^1.2.10, which@^1.2.14, which@^1.2.9, which@^1.3.0:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/which/-/which-1.3.1.tgz#a45043d54f5805316da8d62f9f50918d3da70b0a"
   integrity sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==
