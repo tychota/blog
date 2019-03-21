@@ -52,6 +52,7 @@ export default class PostsList extends React.Component<IProps> {
                     ? frontmatter.tags.map(tag =>
                         tag ? (
                           <span
+                            key={tag}
                             className="tag is-light is-medium"
                             style={{ marginRight: 10 }}
                           >
