@@ -21,28 +21,27 @@ export default class TagsList extends React.Component<IProps> {
       typeof window !== "undefined" ? window.location.search : "";
 
     return (
-      <div className="tile is-ancestor is-vertical">
-        {tags &&
-          tags
-            .filter(
-              ({ name, hasOnlyDraft }) => search.showDraft || !hasOnlyDraft
-            )
-            .map(({ name: tagName }) => {
-              if (!tagName) return null;
-              return (
-                <div
-                  key={tagName}
-                  className="tile notification is-light  is-child box"
-                >
-                  <Link
-                    to={`/tags/${tagName}${searchQP}`}
-                    className="subtitle has-text-link"
-                  >
-                    {tagName}
-                  </Link>
-                </div>
-              );
-            })}
+      <div className="grid">
+        <div className="posts-list">
+          {tags &&
+            tags
+              .filter(
+                ({ name, hasOnlyDraft }) => search.showDraft || !hasOnlyDraft
+              )
+              .map(({ name: tagName }) => {
+                if (!tagName) return null;
+                return (
+                  <div key={tagName} className="box">
+                    <Link
+                      to={`/tags/${tagName}${searchQP}`}
+                      className="title has-text-link is-3"
+                    >
+                      #{tagName}
+                    </Link>
+                  </div>
+                );
+              })}
+        </div>
       </div>
     );
   }

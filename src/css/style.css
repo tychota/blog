@@ -66,6 +66,9 @@ body,
 .navbar-end .navbar-item {
   font-family: "Calluna Sans";
 }
+a {
+  color: #e32549;
+}
 .has-text-link {
   color: #e32549 !important;
   padding: 0.1rem 0.3rem;
@@ -164,6 +167,10 @@ center:nth-of-type(2n) + blockquote + blockquote {
 
 .grid-xl {
   grid-column: xl;
+}
+
+.grid .posts-list > * {
+  grid-column: l;
 }
 
 .grid .gatsby-highlight {

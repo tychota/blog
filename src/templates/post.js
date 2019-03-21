@@ -74,9 +74,9 @@ export default class PostTemplate extends React.Component<IProps> {
             </section>
           </section>
           <div className="container is-fluid">
-            <div className="content">
+            <main className="content">
               <div className="grid">{renderAst(htmlAst)}</div>
-            </div>
+            </main>
             <NeighbourLinks prev={prev} next={next} />
           </div>
           <Footer />
