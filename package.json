@@ -13,7 +13,7 @@
     "babel-plugin-idx": "^2.4.0",
     "bulma": "^0.7.4",
     "date-fns": "^2.0.0-alpha.25",
-    "gatsby": "^2.2.3",
+    "gatsby": "^4.25.7",
     "gatsby-image": "^2.0.34",
     "gatsby-plugin-catch-links": "^2.0.13",
     "gatsby-plugin-favicon": "^3.1.5",
